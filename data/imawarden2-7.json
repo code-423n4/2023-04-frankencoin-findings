@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "imawarden2",
+  "risk": "2",
+  "title": "MintingHub.end() logic enables front-runner to steal collateral when un-bid challenge ends",
+  "issueId": 7,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/7"
+}
