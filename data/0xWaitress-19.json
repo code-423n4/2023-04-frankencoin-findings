@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xWaitress",
+  "risk": "3",
+  "title": "restructureCapTable does not enumerate each addressToWipe",
+  "issueId": 19,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/19"
+}
