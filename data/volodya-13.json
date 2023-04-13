@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "volodya",
+  "risk": "2",
+  "title": "The initialization period for position is different in the code and documentation.",
+  "issueId": 13,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/13"
+}
