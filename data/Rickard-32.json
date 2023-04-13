@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Rickard",
+  "risk": "2",
+  "title": "As protocol relies heavily on admin actions, single-step ownership transfer pattern is dangerous",
+  "issueId": 32,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/32"
+}
