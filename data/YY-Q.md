@@ -15,7 +15,7 @@ Implement input validation such as `require(shares > 0, "Shares must be greater 
 
 ---
 
-# [L-01] Missing input validation in `splitChallenge` function (MintingHub.sol)
+# [L-02] Missing input validation in `splitChallenge` function (MintingHub.sol)
 https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MintingHub.sol#L156
 
 ## Impact
@@ -34,3 +34,23 @@ e.g
 
 --- 
 
+# [L-03] Anyone can `end` function  (MintingHub.sol)
+https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MintingHub.sol#L252
+
+## Impact
+Detailed description of the impact of this finding.
+
+## Proof of Concept
+Although some prevention have been set in this function, there is no checking for who call this function.
+Based on the code of `end` function, it allowed everyone to call it.
+```
+function end(uint256 _challengeNumber, bool postponeCollateralReturn) public {
+```
+
+The attacker could prematurely end a challenge, resulting in the transfer of collateral to an unintended recipient, potentially the attacker themselves. 
+
+## Tools Used
+VS Code
+
+## Recommended Mitigation Steps
+Implement access control for this function.
