@@ -33,3 +33,12 @@
 
 Logic to use challenge status in the business logic
 
+
+3) Solidity version should be locked for all contracts. Best is to keep the solidity version same for all contracts where possible.
+   It is better to lock the contracts to a specific version of Solidity during testing. Using ^0.8.0
+   will attempt to run this smart contracts in high version of solidity which are not tested at all.
+   
+   pragma solidity ^0.8.0;
+   Also, is there a reason to using pragma solidity >=0.8.0 <0.9.0 for equity contract.
+
+
