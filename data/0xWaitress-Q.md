@@ -51,3 +51,14 @@ Recommendation
         IERC20(collateral).transfer(target, amount);
     }
 ```
+
+4. PositionFactory can exist as a library since it does not have any storage variable
+```soldiity
+
+contract PositionFactory {
+
+```
+Recommendation 
+```solidity
+library PositionFactory {
+```
