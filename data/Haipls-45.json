@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Haipls",
+  "risk": "2",
+  "title": "Non-compliance with the `EIP-2612/EIP-712` standard",
+  "issueId": 45,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/45"
+}
