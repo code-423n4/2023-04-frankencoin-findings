@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "YY",
+  "risk": "2",
+  "title": "Unsafe call to ERC20::transfer can result in stuck funds",
+  "issueId": 22,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/22"
+}
