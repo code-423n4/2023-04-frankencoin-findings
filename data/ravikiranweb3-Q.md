@@ -47,6 +47,6 @@ Logic to use challenge status in the business logic
   
     to be 
    
-   if (minters[_minter] != address(0)) revert AlreadyRegistered();
+   if (minters[_minter] != address(0x0)) revert AlreadyRegistered();
 
    https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L86
