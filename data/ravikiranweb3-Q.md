@@ -41,4 +41,12 @@ Logic to use challenge status in the business logic
    pragma solidity ^0.8.0;
    Also, is there a reason to using pragma solidity >=0.8.0 <0.9.0 for equity contract.
 
+4) Comparing zero address to make it more reader friendly
+   Frankencoin.suggestMinter() function 
+   if (minters[_minter] != 0) revert AlreadyRegistered();
+  
+    to be 
+   
+   if (minters[_minter] != address(0)) revert AlreadyRegistered();
 
+   https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L86
