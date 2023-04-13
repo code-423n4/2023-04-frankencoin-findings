@@ -28,3 +28,26 @@ https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol
 
 Recommendation:
 set it to a more precise block number
+
+==== \n
+
+3. Challenger cannot be a contract but EOA, now restricted by the returnPostponedCollateral
+
+```solidity
+    function returnPostponedCollateral(address collateral, address target) external {
+        uint256 amount = pendingReturns[collateral][msg.sender];
+        delete pendingReturns[collateral][msg.sender];
+        IERC20(collateral).transfer(target, amount);
+    }
+
+```
+this restricts many gas stations or smart contract to collect postponedCollateral. 
+
+Recommendation
+```solidity
+    function returnPostponedCollateral(address collateral, address target, address from) external {
+        uint256 amount = pendingReturns[collateral][from]; @>audit
+        delete pendingReturns[collateral][from]; @>audit
+        IERC20(collateral).transfer(target, amount);
+    }
+```
