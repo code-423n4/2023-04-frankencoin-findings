@@ -1,4 +1,4 @@
-# Missing input validation in `redeem` function (Equity.sol)
+# [L-01] Missing input validation in `redeem` function (Equity.sol)
 
 https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L275
 ## Impact
@@ -15,7 +15,7 @@ Implement input validation such as `require(shares > 0, "Shares must be greater 
 
 ---
 
-# Missing input validation in `splitChallenge` function (MintingHub.sol)
+# [L-01] Missing input validation in `splitChallenge` function (MintingHub.sol)
 https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MintingHub.sol#L156
 
 ## Impact
@@ -31,3 +31,6 @@ VS Code
 Implement input validation such as require()
 e.g 
 `require(splitOffAmount > 0 && splitOffAmount < challenge.size, "Invalid splitOffAmount value");`
+
+--- 
+
