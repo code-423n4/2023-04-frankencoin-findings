@@ -37,9 +37,6 @@ e.g
 # [L-03] Anyone can `end` function  (MintingHub.sol)
 https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MintingHub.sol#L252
 
-## Impact
-Detailed description of the impact of this finding.
-
 ## Proof of Concept
 Although some prevention have been set in this function, there is no checking for who call this function.
 Based on the code of `end` function, it allowed everyone to call it.
