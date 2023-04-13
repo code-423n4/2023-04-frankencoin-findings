@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xWaitress",
+  "risk": "2",
+  "title": "end should delete `challenges[_challengeNumber];` before execution to avoid potential re-entrency.",
+  "issueId": 26,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/26"
+}
