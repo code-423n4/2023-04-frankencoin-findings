@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "SaeedAlipoor01988",
+  "risk": "2",
+  "title": "Lack of check position owner ends up owning 100% of the collateral asset in circulation when launching Challenge",
+  "issueId": 57,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/57"
+}
