@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "deadrxsezzz",
+  "risk": "3",
+  "title": "A malicious user can get minter rights and mint/ burn indefinitely ",
+  "issueId": 79,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/79"
+}
