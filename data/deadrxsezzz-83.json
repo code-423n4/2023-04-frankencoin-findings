@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "deadrxsezzz",
+  "risk": "2",
+  "title": "The Position.sol contract will be unable to withdraw tokens which don't return a bool on transfer",
+  "issueId": 83,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/83"
+}
