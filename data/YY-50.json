@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "YY",
+  "risk": "2",
+  "title": "denyMinter() function could allow invalid _minter addresses",
+  "issueId": 50,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/50"
+}
