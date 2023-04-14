@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ginlee",
+  "risk": "2",
+  "title": "you should approve the amount before calling transferFrom",
+  "issueId": 54,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/54"
+}
