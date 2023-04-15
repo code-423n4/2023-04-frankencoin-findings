@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Proxy",
+  "risk": "2",
+  "title": "Lack of two-step procedure and input validation for transferring ownership leaves it error-prone",
+  "issueId": 95,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/95"
+}
