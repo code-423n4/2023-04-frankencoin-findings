@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "DrFarree",
+  "risk": "2",
+  "title": "Missing constructor in Ownable.sol contract results in owner address being set to zero address",
+  "issueId": 147,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/147"
+}
