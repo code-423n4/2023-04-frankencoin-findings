@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "SaeedAlipoor01988",
+  "risk": "2",
+  "title": "lack of check on MIN value for MIN_APPLICATION_PERIOD at Frankencoin.sol#L60",
+  "issueId": 109,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/109"
+}
