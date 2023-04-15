@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "J4de",
+  "risk": "2",
+  "title": "`Equity.sol#restructureCapTable` only handles `burnaddressesToWipe[0]`",
+  "issueId": 116,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/116"
+}
