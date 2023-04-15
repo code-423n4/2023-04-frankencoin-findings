@@ -1,5 +1,257 @@
 # LOW FINDINGS
 
+##
+
+## [L-1] Loss of precision due to rounding
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+80:  price = _mint * ONE_DEC18 / _coll;
+98:  uint256 reduction = (limit - minted - _minimum)/2; 
+122: return totalMint * (1000_000 - reserveContribution - calculateCurrentFee()) / 1000_000;
+124: return totalMint * (1000_000 - reserveContribution) / 1000_000;
+187: return uint32(mintingFeePPM - mintingFeePPM * (time - start) / (exp - start));
+239: return 1000000 * amountExcludingReserve / (1000000 - adjustedReservePPM); // 41 / (1-18%) = 50
+
+```
+[Position.sol#L80](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L80)
+
+```solidity
+FILE: FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
+
+118: return minterReserveE6 / 1000000;
+
+```
+[Frankencoin.sol#L118](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L118)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Equity.sol
+
+109:  return VALUATION_FACTOR * zchf.equity() * ONE_DEC18 / totalSupply();
+161:  voteAnchor[to] = uint64(anchorTime() - recipientVotes / newbalance); 
+173:  return uint64(block.number << BLOCK_TIME_RESOLUTION_BITS);
+
+```
+[Equity.sol#L109](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L109)
+
+```solidity 
+FILE: 2023-04-frankencoin/contracts/MintingHub.sol
+
+189:   return (challenge.bid * 1005) / 1000;
+
+```
+[MintingHub.sol#L189](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L189)
+
+##
+
+## [L-2] Consider using OpenZeppelin’s SafeCast library to prevent unexpected overflows when casting from uint256
+
+Using the SafeCast library can help prevent unexpected errors in your Solidity code and make your contracts more secure
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+187: return uint32(mintingFeePPM - mintingFeePPM * (time - start) / (exp - start));
+
+```
+[Position.sol#L187](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L187)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Equity.sol
+
+146:   totalVotesAtAnchor = uint192(totalVotes() - roundingLoss - lostVotes);
+161:   voteAnchor[to] = uint64(anchorTime() - recipientVotes / newbalance); 
+
+```
+[Equity.sol#L146](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L146)
+
+### Recommended Mitigation Steps:
+Consider using OpenZeppelin’s SafeCast library to prevent unexpected overflows when casting from uint256.
+
+##
+
+## [L-3] Vulnerable to cross-chain replay attacks due to static DOMAIN_SEPARATOR/domainSeparator
+
+See this [issue](https://github.com/code-423n4/2021-04-maple-findings/issues/2) from a prior contest for details
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/ERC20PermitLight.sol
+
+function DOMAIN_SEPARATOR() public view returns (bytes32) {
+        return
+            keccak256(
+                abi.encode(
+                    //keccak256("EIP712Domain(uint256 chainId,address verifyingContract)");
+                    bytes32(0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218),
+                    block.chainid,
+                    address(this)
+                )
+            );
+
+```
+[ERC20PermitLight.sol#L61-L70](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20PermitLight.sol#L61-L70)
+
+## [L-4] MIXING AND OUTDATED COMPILER
+
+The pragma version used are: 0.8.0
+
+The minimum required version must be 0.8.17; otherwise, contracts will be affected by the following important bug fixes:
+
+0.8.14:
+
+ABI Encoder: When ABI-encoding values from calldata that contain nested arrays, correctly validate the nested array length against calldatasize() in all cases.
+Override Checker: Allow changing data location for parameters only when overriding external functions.
+
+0.8.15
+
+Code Generation: Avoid writing dirty bytes to storage when copying bytes arrays.
+Yul Optimizer: Keep all memory side-effects of inline assembly blocks.
+
+0.8.16
+
+Code Generation: Fix data corruption that affected ABI-encoding of calldata values represented by tuples: structs at any nesting level; argument lists of external functions, events and errors; return value lists of external functions. The 32 leading bytes of the first dynamically-encoded value in the tuple would get zeroed when the last component contained a statically-encoded array.
+
+0.8.17
+Yul Optimizer: Prevent the incorrect removal of storage writes before calls to Yul functions that conditionally terminate the external EVM call.
+Apart from these, there are several minor bug fixes and improvements
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/ERC20.sol
+
+12: pragma solidity ^0.8.0;
+
+FILE: 2023-04-frankencoin/contracts/ERC20PermitLight.sol
+
+5: pragma solidity ^0.8.0;
+
+FILE: 2023-04-frankencoin/contracts/StablecoinBridge.sol
+
+2: pragma solidity ^0.8.0;
+
+FILE: 2023-04-frankencoin/contracts/StablecoinBridge.sol
+
+2: pragma solidity ^0.8.0;
+
+FILE: 2023-04-frankencoin/contracts/PositionFactory.sol
+
+2: pragma solidity ^0.8.0;
+
+FILE: 2023-04-frankencoin/contracts/MathUtil.sol
+
+3: pragma solidity >=0.8.0 <0.9.0;
+
+FILE: 2023-04-frankencoin/contracts/Ownable.sol
+
+9: pragma solidity ^0.8.0;
+
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+2: pragma solidity ^0.8.0;
+
+FILE: 2023-04-frankencoin/contracts/MintingHub.sol
+
+2: pragma solidity ^0.8.0;
+
+FILE: 2023-04-frankencoin/contracts/Equity.sol
+
+4: pragma solidity >=0.8.0 <0.9.0;
+
+FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
+
+2: pragma solidity ^0.8.0;
+
+```
+
+##
+
+## [L-5] abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as keccak256()
+
+Use abi.encode() instead which will pad items to 32 bytes, which will prevent hash collisions (e.g. abi.encodePacked(0x123,0x456) => 0x123456 => abi.encodePacked(0x1,0x23456), but abi.encode(0x123,0x456) => 0x0...1230...456). "Unless there is a compelling reason, abi.encode should be preferred". If there is only one argument to abi.encodePacked() it can often be cast to bytes() or bytes32() instead. If all arguments are strings and or bytes, bytes.concat() should be used instead
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/ERC20PermitLight.sol
+
+abi.encodePacked(
+                        "\x19\x01",
+                        DOMAIN_SEPARATOR(),
+                        keccak256(
+                            abi.encode(
+                                // keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"),
+                                bytes32(0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9),
+                                owner,
+                                spender,
+                                value,
+                                nonces[owner]++,
+                                deadline
+                            )
+                        )
+                    )
+                ),
+                v,
+                r,
+                s
+            );
+
+```
+[ERC20PermitLight.sol#L35-L54](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20PermitLight.sol#L35-L54)
+
+##
+
+## [L-6] Lack of Sanity/Threshold/Limit Checks
+
+Devoid of sanity/threshold/limit checks, critical parameters can be configured to invalid values, causing a variety of issues and breaking expected interactions within/between contracts. Consider adding proper uint256 validation as well as zero address checks for critical changes. A worst case scenario would render the contract needing to be re-deployed in the event of human/accidental errors that involve value assignments to immutable variables. If the validation procedure is unclear or too complex to implement on-chain, document the potential issues that could produce invalid values
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
+
+_minApplicationPeriod value is not checked before assigning to MIN_APPLICATION_PERIOD 
+
+constructor(uint256 _minApplicationPeriod) ERC20(18){
+      MIN_APPLICATION_PERIOD = _minApplicationPeriod;
+      reserve = new Equity(this);
+   }
+
+function registerPosition(address _position) override external {
+      if (!isMinter(msg.sender)) revert NotMinter();
+      positions[_position] = msg.sender;
+   }
+
+function burn(uint256 _amount) external {
+      _burn(msg.sender, _amount);
+   }
+
+function isMinter(address _minter) override public view returns (bool){
+      return minters[_minter] != 0 && block.timestamp >= minters[_minter];
+   }
+
+```
+[Frankencoin.sol#L59-L62](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L59-L62)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Equity.sol
+
+112: function _beforeTokenTransfer(address from, address to, uint256 amount) override internal {
+113: super._beforeTokenTransfer(from, to, amount);
+
+```
+[Equity.sol#L112-L113](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L112-L113)
+
+```solidity 
+FILE: 2023-04-frankencoin/contracts/MintingHub.sol
+
+function openPosition(
+        address _collateralAddress, uint256 _minCollateral, uint256 _initialCollateral,
+        uint256 _mintingMaximum, uint256 _initPeriodSeconds, uint256 _expirationSeconds, uint256 _challengeSeconds,
+        uint32 _mintingFeePPM, uint256 _liqPrice, uint32 _reservePPM) public returns (address) {
+
+```
+[MintingHub.sol#L88-L105](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L88-L105)
+
+##
+
+## [L-7] 
+
 # NON CRITICAL FINDINGS
 
 ##
@@ -21,6 +273,14 @@ uint32 public immutable reserveContribution; // in ppm
 ```
 [Position.sol#L29-L39](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L29-L39)
 
+```solidity
+FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
+
+31: IReserve override public immutable reserve;
+
+```
+[Frankencoin.sol#L31](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L31)
+
 ##
 
 ## [NC-2] For modern and more readable code; update import usages
@@ -36,7 +296,92 @@ This was breaking the rule of modularity and modular programming: only import wh
 ### Recommendation
 import {contract1 , contract2} from "filename.sol";
 
+##
 
+## [NC-3] Missing NATSPEC
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L181-L189
+
+##
+
+## [NC-4] For functions, follow Solidity standard naming conventions (internal function style rule)
+
+### Description
+The above codes don’t follow Solidity’s standard naming convention,
+
+internal and private functions : the mixedCase format starting with an underscore (_mixedCase starting with an underscore)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+193: function mintInternal(address target, uint256 amount, uint256 collateral_) internal {
+202: function restrictMinting(uint256 period) internal {
+232: function repayInternal(uint256 burnable) internal {
+240: function notifyRepaidInternal(uint256 amount) internal 
+268: function internalWithdrawCollateral(address target, uint256 amount) internal returns (uint256) {
+282: function checkCollateral(uint256 collateralReserve, uint256 atPrice) internal view {
+286: function emitUpdate() internal {
+
+```
+[Position.sol#L193](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L193)
+
+```solidity
+FILE: FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
+
+102: function allowanceInternal(address owner, address spender) internal view override returns (uint256) {
+
+```
+[Frankencoin.sol#L102](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L102)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Equity.sol
+
+144:  function adjustTotalVotes(address from, uint256 amount, uint256 roundingLoss) internal {
+157:  function adjustRecipientVoteAnchor(address to, uint256 amount) internal returns (uint256){
+
+```
+[Equity.sol#L144](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L144)
+
+```solidity
+
+```
+```solidity
+
+```
+```solidity
+
+```
+```solidity
+
+```
+```solidity
+
+```
+##
+
+## [NC-5] Use scientific notation (e.g. 1e18) rather than exponentiation (e.g. 10**18)
+
+While the compiler knows to optimize away the exponentiation, it’s still better coding practice to use idioms that do not require compiler optimization, if they exist
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
+
+25: uint256 public constant MIN_FEE = 1000 * (10**18);
+
+```
+[Frankencoin.sol#L25](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L25)
+
+```solidity 
+FILE: 2023-04-frankencoin/contracts/MintingHub.sol
+
+20:     uint256 public constant OPENING_FEE = 1000 * 10**18;
+
+```
+[MintingHub.sol#L20](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L20)
+
+##
+
+## [NC-6] 
 
 
 
