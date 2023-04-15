@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "J4de",
+  "risk": "3",
+  "title": "`Position.sol#internalWithdrawCollateral` When the `balance` is less than the `minimumCollateral`, the remaining collateral can never be withdrawn",
+  "issueId": 123,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/123"
+}
