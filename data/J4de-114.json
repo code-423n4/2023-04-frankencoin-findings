@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "J4de",
+  "risk": "3",
+  "title": "Attackers can defect early causing `Equity.sol#votes` to fail",
+  "issueId": 114,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/114"
+}
