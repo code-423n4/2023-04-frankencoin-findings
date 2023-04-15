@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ToonVH",
+  "risk": "2",
+  "title": "restructureCapTable() is dangerous, allows for attacker to drain all value in the system",
+  "issueId": 132,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/132"
+}
