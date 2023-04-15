@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "J4de",
+  "risk": "3",
+  "title": "`Equity.sol#canVoteFor` may be set to infinitely recursive by an attacker",
+  "issueId": 113,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/113"
+}
