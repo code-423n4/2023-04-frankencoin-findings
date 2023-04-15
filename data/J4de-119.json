@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "J4de",
+  "risk": "3",
+  "title": "`Frankencoin.sol `malicious or out of control minters should be able to be removed",
+  "issueId": 119,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/119"
+}
