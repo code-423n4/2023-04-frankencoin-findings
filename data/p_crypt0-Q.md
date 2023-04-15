@@ -1,8 +1,8 @@
 # Position.sol
 
-## [Informational] Constructor should use variable for initPeriod, rather than magic number.
+## [Low] Constructor should use variable for `initPeriod`, rather than magic number and further assumptions about `start` no longer ring true.
 
-Currently, the `Position.sol` constructor validates the `initPeriod` to be greater than or equal to 3 days, however, recommends a higher value.
+Currently, the `Position.sol` constructor validates the `initPeriod` to be greater than or equal to 3 days, however, recommends a higher value and a later comment on line 64 reads that the `start` block is the: `block.timestamp + initPeriod // one week time to deny the position`. This assumptions for this comment don't hold when put in relation to the code, if the user enters an `initPeriod` of `3 days`.
 
 ```solidity
 constructor(address _owner, address _hub, address _zchf, address _collateral, 
@@ -32,6 +32,7 @@ constructor(address _owner, address _hub, address _zchf, address _collateral,
 The issues with using a magic number here, is that if `initPeriod` requires a different value in the future - say, at least 4 days becomes the normal `initPeriod` - then the codebase itself has to change rather than a variable update.
 
 ### Recommendation
+Change the code comment on line 64 to read: `// at least 3 days time to deny the position`
 Two paths:
 
 First, use a `constant` variable called `minInitPeriod` and set it equal to the desired number of days for a minimum `initPeriod`
