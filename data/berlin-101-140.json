@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "berlin-101",
+  "risk": "2",
+  "title": "Frontrunning suggesting the first minter and minting a small amount of Frankencoin results in DoS",
+  "issueId": 140,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/140"
+}
