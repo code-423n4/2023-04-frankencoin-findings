@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0x73696d616f",
+  "risk": "3",
+  "title": "Any minter can be denied by looking at the mempool for minters and frontrunning the suggest minter transaction with a huge application period",
+  "issueId": 141,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/141"
+}
