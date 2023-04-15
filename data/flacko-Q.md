@@ -2,6 +2,8 @@ https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol
 
 ## Impact
 
+Low
+
 The `calculateProceeds` method guards against redeeming too many shares, ensuring there's always 1 share left for the total supply. Or at least that's what the comment on that line says.
 
 `require(shares + ONE_DEC18 < totalShares, "too many shares"); // make sure there is always at least one share`
