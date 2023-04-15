@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "SaeedAlipoor01988",
+  "risk": "3",
+  "title": "If the challenge.bidder is added to the USDC/USDT blacklist, then MintingHub.sol#L252.end() does not work",
+  "issueId": 135,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/135"
+}
