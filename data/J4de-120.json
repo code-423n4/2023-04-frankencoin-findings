@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "J4de",
+  "risk": "2",
+  "title": "`StablecoinBridge.sol` contract may be mint in advance and cause DOS",
+  "issueId": 120,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/120"
+}
