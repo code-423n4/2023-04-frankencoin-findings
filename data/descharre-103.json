@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "descharre",
+  "risk": "3",
+  "title": "Minter can mint unlimited tokens when calling `notifyLoss`",
+  "issueId": 103,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/103"
+}
