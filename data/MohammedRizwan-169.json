@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "MohammedRizwan",
+  "risk": "2",
+  "title": "Missing address zero check can cause redeployment of contract and permanent loss of collateral of individual user",
+  "issueId": 169,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/169"
+}
