@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "P-384",
+  "risk": "2",
+  "title": "Usage of ecrecover allows malleable SECP256K1 signatures.",
+  "issueId": 92,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/92"
+}
