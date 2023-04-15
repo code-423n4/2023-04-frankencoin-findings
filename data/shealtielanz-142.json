@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "shealtielanz",
+  "risk": "2",
+  "title": "Token Can be lost due to the use of `Unsafe` transfer Operations.",
+  "issueId": 142,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/142"
+}
