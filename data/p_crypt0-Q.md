@@ -39,3 +39,7 @@ First, use a `constant` variable called `minInitPeriod` and set it equal to the 
 Alternatively, use a `uint` to create a `private` changeable variable for a `minInitPeriod`:
 	2 a) create a `setMinInitPeriod(uint newMinInitPeriod)` method which is access restricted to the owner of the contract.
 	2 b) use the `minInitPeriod` variable in checks.
+
+### Update from hermel#2851 via discord
+
+Hermel described the finding as a good spot and that 3 days is currently the desired amount of time for a minInitPeriod. The comment was described as being outdated, however, if the initPeriod has changed in the past, this is precedent for it perhaps changing again in the future so my recommendations stand as informational.
