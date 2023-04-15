@@ -8,7 +8,8 @@ Currently, the `Position.sol` constructor validates the `initPeriod` to be great
 constructor(address _owner, address _hub, address _zchf, address _collateral, 
         uint256 _minCollateral, uint256 _initialLimit, uint256 initPeriod, uint256 _duration,
         uint256 _challengePeriod, uint32 _mintingFeePPM, uint256 _liqPrice, uint32 _reservePPM) {
-        require(initPeriod >= 3 days); // must be at least three days, recommended to use higher values //@audit this ought to be either a constant, or variable period rather than magic number.
+        require(initPeriod >= 3 days); // must be at least three days, recommended to use higher values 
+        //@audit this ought to be either a constant, or variable period rather than magic number.
         setOwner(_owner);
         original = address(this);
         hub = _hub;
