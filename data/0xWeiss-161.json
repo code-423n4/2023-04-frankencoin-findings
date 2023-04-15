@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xWeiss",
+  "risk": "3",
+  "title": "Any minter can override ownership of all positions to themselves",
+  "issueId": 161,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/161"
+}
