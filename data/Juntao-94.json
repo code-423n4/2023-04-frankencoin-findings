@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Juntao",
+  "risk": "3",
+  "title": "Attacker can bypass MIN_APPLICATION_PERIOD and MIN_FEE to become a minter",
+  "issueId": 94,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/94"
+}
