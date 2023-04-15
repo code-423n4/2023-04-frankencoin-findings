@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0x73696d616f",
+  "risk": "3",
+  "title": "An attacker can mint frankencoins by being the first to call suggestMinter(...) and minting to himself",
+  "issueId": 90,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/90"
+}
