@@ -37,5 +37,5 @@ First, use a `constant` variable called `minInitPeriod` and set it equal to the 
 
 
 Alternatively, use a `uint` to create a `private` changeable variable for a `minInitPeriod`:
-	2 a) create a `setMinInitPeriod(uint8 newMinInitPeriod)` method which is access restricted to the owner of the contract.
+	2 a) create a `setMinInitPeriod(uint newMinInitPeriod)` method which is access restricted to the owner of the contract.
 	2 b) use the `minInitPeriod` variable in checks.
