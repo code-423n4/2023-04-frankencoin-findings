@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ladboy233",
+  "risk": "2",
+  "title": "Incorrect precision handling for stablecoin for StablecoinBridge.sol",
+  "issueId": 170,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/170"
+}
