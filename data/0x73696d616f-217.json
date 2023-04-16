@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0x73696d616f",
+  "risk": "3",
+  "title": "Some ERC20's have a different number of decimals (USDC has 6) than Frankencoin, which has 18, so the coin would lose the peg",
+  "issueId": 217,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/217"
+}
