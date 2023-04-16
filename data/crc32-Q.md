@@ -10,7 +10,7 @@ function denyMinter(address _minter, address[] calldata _helpers, string calldat
 ```
 A malicious share holder with 3% of the votes can deny all of the proposals and seems it should be a higher number.
 
-## 2. `StablecoinBridge` should give back the allowance when reaches to the `limit`
+## 2. Set allowance value to 0 when `StablecoinBridge` is reached to the `limit`
 Proof of Concept (create a new test file and paste the following code):
 ```
 // @ts-nocheck
