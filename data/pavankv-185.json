@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "pavankv",
+  "risk": "2",
+  "title": "Math library is vulnerable to shadow overflow.",
+  "issueId": 185,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/185"
+}
