@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "crc32",
+  "risk": "2",
+  "title": "`StablecoinBridge` has the potential to get out of service without minting any ZCHF token",
+  "issueId": 229,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/229"
+}
