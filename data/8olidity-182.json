@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "8olidity",
+  "risk": "2",
+  "title": "When delegates[msg.sender] == msg.sender, votes() will fail to run",
+  "issueId": 182,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/182"
+}
