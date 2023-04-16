@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "MohammedRizwan",
+  "risk": "2",
+  "title": "In position.sol contract, initializeClone can be reinitialized",
+  "issueId": 172,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/172"
+}
