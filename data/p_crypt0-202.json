@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "p_crypt0",
+  "risk": "2",
+  "title": "Position.sol constructor minimum initialisation period of seven-days is not gauranteed by code-base, despite assertion in docs and MintingHub.sol",
+  "issueId": 202,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/202"
+}
