@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "georgits",
+  "risk": "2",
+  "title": "permit() function can be front-ran resulting in token theft",
+  "issueId": 189,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/189"
+}
