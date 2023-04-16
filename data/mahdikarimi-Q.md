@@ -1,0 +1,2 @@
+## lack of collateral whitelisting 
+Since to have a safe and efficient Stablecoin minting should allowed only with high quality collateral so it's better to have a list of allowed collateral and checked during openPosition and if someone want to mint zchf in a different collateral he should purpose it to dao and everyone votes on it and if gets enough vote it will be whitelisted . 
