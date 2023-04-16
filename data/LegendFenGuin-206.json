@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "LegendFenGuin",
+  "risk": "3",
+  "title": "Using ERC777 with collateral leads to reentrancy attack when end challenge.",
+  "issueId": 206,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/206"
+}
