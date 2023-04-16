@@ -250,7 +250,25 @@ function openPosition(
 
 ##
 
-## [L-7] 
+## [L-7] Function may run out of gas
+
+When we give inputs in arrays the length must be checked before proceed loops. If the length too high the function may run out of gas 
+
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Equity.sol
+
+for (uint i=0; i<helpers.length; i++){
+            address current = helpers[i];
+
+ for (uint256 i = 0; i<addressesToWipe.length; i++){
+            address current = addressesToWipe[0];
+```
+[Equity.sol#L192](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L192)
+
+##
+
+## [L-8] 
 
 # NON CRITICAL FINDINGS
 
@@ -283,28 +301,13 @@ FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
 
 ##
 
-## [NC-2] For modern and more readable code; update import usages
-
-### Context
-All In Scope Contracts 
-
-### Description
-Solidity code is also cleaner in another way that might not be noticeable: the struct Point. We were importing it previously with global import but not using it. The Point struct polluted the source code with an unnecessary object we were not using because we did not need it.
-
-This was breaking the rule of modularity and modular programming: only import what you need Specific imports with curly braces allow us to apply this rule better.
-
-### Recommendation
-import {contract1 , contract2} from "filename.sol";
-
-##
-
-## [NC-3] Missing NATSPEC
+## [NC-2] Missing NATSPEC
 
 https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L181-L189
 
 ##
 
-## [NC-4] For functions, follow Solidity standard naming conventions (internal function style rule)
+## [NC-3] For functions, follow Solidity standard naming conventions (internal function style rule)
 
 ### Description
 The above codes don’t follow Solidity’s standard naming convention,
@@ -359,7 +362,7 @@ FILE: 2023-04-frankencoin/contracts/Equity.sol
 ```
 ##
 
-## [NC-5] Use scientific notation (e.g. 1e18) rather than exponentiation (e.g. 10**18)
+## [NC-4] Use scientific notation (e.g. 1e18) rather than exponentiation (e.g. 10**18)
 
 While the compiler knows to optimize away the exponentiation, it’s still better coding practice to use idioms that do not require compiler optimization, if they exist
 
@@ -381,7 +384,68 @@ FILE: 2023-04-frankencoin/contracts/MintingHub.sol
 
 ##
 
-## [NC-6] 
+## [NC-5] Need Fuzzing test for unchecked 
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/ERC20PermitLight.sol
+
+32: unchecked { 
+
+```
+[ERC20PermitLight.sol#L32](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20PermitLight.sol#L32)
+
+##
+
+## [NC-6] Remove commented out code
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/ERC20PermitLight.sol
+
+65: //keccak256("EIP712Domain(uint256 chainId,address verifyingContract)");
+
+```
+[ERC20PermitLight.sol#L65](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20PermitLight.sol#L65)
+
+##
+
+## [NC-7] Inconsistent spacing in comments
+
+Some lines use // x and some use //x. The instances below point out the usages that don’t follow the majority, within each file
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20PermitLight.sol#L65
+
+##
+
+## [NC-8] Inconsistent method of specifying a floating pragma
+
+Some files use >=, some use ^. The instances below are examples of the method that has the fewest instances for a specific version. Note that using >= without also specifying <= will lead to failures to compile, or external project incompatability, when the major version changes and there are breaking-changes, so ^ should be preferred regardless of the instance counts
+
+```solidity
+
+FILE: 2023-04-frankencoin/contracts/PositionFactory.sol
+
+2: pragma solidity ^0.8.0;
+
+FILE: 2023-04-frankencoin/contracts/MathUtil.sol
+
+3: pragma solidity >=0.8.0 <0.9.0;
+
+```
+##
+
+## [NC-9] Numeric values having to do with time should use time units for readability
+
+There are [units](https://docs.soliditylang.org/en/latest/units-and-global-variables.html#time-units) for seconds, minutes, hours, days, and weeks, and since they’re defined, they should be used
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Equity.sol
+
+51:  uint8 private constant BLOCK_TIME_RESOLUTION_BITS = 24;
+
+59:  uint256 public constant MIN_HOLDING_DURATION = 90*7200 << BLOCK_TIME_RESOLUTION_BITS;
+
+```
+[Equity.sol#L59](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L59)
 
 
 
