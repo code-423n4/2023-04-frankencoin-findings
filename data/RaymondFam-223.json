@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "RaymondFam",
+  "risk": "3",
+  "title": "The first lucky caller of end() when no one bids is going to receive the liquidated collateral at the expense of the reserve",
+  "issueId": 223,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/223"
+}
