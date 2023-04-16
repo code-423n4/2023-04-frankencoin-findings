@@ -1,6 +1,54 @@
 # GAS OPTIMIZATION
 
-## [G-1] For events use 3 indexed rule to save gas 
+##
+
+## [G-1] State variables should be cached in stack variables rather than re-reading them from storage
+
+Caching will replace each Gwarmaccess (100 gas) with a much cheaper stack read.
+Less obvious fixes/optimizations include having local storage variables of mappings within state variable mappings or mappings within state variable structs, having local storage variables of structs within mappings, having local memory caches of state variable structs, or having local caches of state variable contracts/addresses.
+
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+minted state variable should be cached with stack variable 
+
+141: if (newMinted < minted){ /// @audit minted cached
+            zchf.burnFrom(msg.sender, minted - newMinted, reserveContribution); /// @audit minted cached
+            minted = newMinted;
+        }
+        if (newCollateral < colbal){
+            withdrawCollateral(msg.sender, colbal - newCollateral);
+        }
+        // Must be called after collateral withdrawal
+        if (newMinted > minted){  /// @audit minted cached
+            mint(msg.sender, newMinted - minted);  /// @audit minted cached
+        }
+
+241: if (amount > minted) revert RepaidTooMuch(amount - minted);
+        minted -= amount;
+
+349:  uint256 repayment = minted < volumeZCHF ? minted : volumeZCHF; 
+
+```
+[Position.sol#L141-L150](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L141-L150)
+
+##
+
+## [G-2] Copying struct to memory can be more expensive than just reading from storage
+
+I suggest using the storage keyword instead of the memory one, as the copy in memory is wasting some MSTOREs and MLOADs.
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/MintingHub.sol
+
+159: Challenge memory copy = Challenge(
+
+```
+[MintingHub.sol#L159](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L159)
+
+
+## [G-3] For events use 3 indexed rule to save gas 
 
 > Instances()
 
@@ -48,7 +96,7 @@ FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
 
 ##
 
-## [G-2] Multiple address/ID mappings can be combined into a single mapping of an address/ID to a struct, where appropriate
+## [G-4] Multiple address/ID mappings can be combined into a single mapping of an address/ID to a struct, where appropriate
 
 Saves a storage slot for the mapping. Depending on the circumstances and sizes of types, can avoid a Gsset (20000 gas) per mapping combined. Reads and subsequent writes can also be cheaper when a function requires both values and they both fit in the same storage slot. Finally, if both fields are accessed in the same function, can save ~42 gas per access due to [not having to recalculate the key’s keccak256 hash](https://gist.github.com/IllIllI000/ec23a57daa30a8f8ca8b9681c8ccefb0) (Gkeccak256 - 30 gas) and that calculation’s associated stack operations.
 
@@ -70,9 +118,18 @@ FILE: 2023-04-frankencoin/contracts/Equity.sol
 ```
 [Equity.sol#L83-L88](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L83-L88)
 
+```solidity
+FILE: 2023-04-frankencoin/contracts/ERC20.sol
+
+43: mapping (address => uint256) private _balances;
+45: mapping (address => mapping (address => uint256)) private _allowances;
+
+```
+[ERC20.sol#L43-L45](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20.sol#L43-L45)
+
 ##
 
-## [G-3] Lack of input value checks cause a redeployment if any human/accidental errors
+## [G-5] Lack of input value checks cause a redeployment if any human/accidental errors
 
 Devoid of sanity/threshold/limit checks, critical parameters can be configured to invalid values, causing a variety of issues and breaking expected interactions within/between contracts. Consider adding proper uint256 validation. A worst case scenario would render the contract needing to be re-deployed in the event of human/accidental errors that involve value assignments to immutable variables.
 
@@ -93,7 +150,7 @@ constructor(uint256 _minApplicationPeriod) ERC20(18){
 
 ##
 
-## [G-4] Use nested if and, avoid multiple check combinations
+## [G-6] Use nested if and, avoid multiple check combinations
 
 > Instances()
 
@@ -117,7 +174,7 @@ FILE: FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
 ```
 ##
 
-## [G-5] No need to evaluate all expressions to know if one of them is true
+## [G-7] No need to evaluate all expressions to know if one of them is true
 
 When we have a code expressionA || expressionB if expressionA is true then expressionB will not be evaluated and gas saved
 
@@ -142,7 +199,7 @@ FILE: FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
 ```
 ##
 
-## [G-6] Repeated functions should be cached instead of multiple calls to save gas 
+## [G-8] Repeated functions should be cached instead of multiple calls to save gas 
 
 In Solidity, caching repeated function calls can be an effective way to optimize gas usage, especially when the function is called frequently with the same arguments
 
@@ -171,9 +228,11 @@ totalSupply() value should be cached instead of calling multiple times
 
 ##
 
-## [G-7] Before transfers funds the amount must be checked with zero values to save gas 
+## [G-9] Amounts should be checked for 0 before calling a transfer
 
-Checking whether the amount being transferred is zero before executing a transfer can be a useful optimization technique to save gas in Solidity. This is because executing a transfer with a zero value will still consume gas, but it will not actually transfer any funds
+Checking non-zero transfer values can avoid an expensive external call and save gas.
+While this is done at some places, it’s not consistently done in the solution.
+I suggest adding a non-zero-value check here
 
 ```solidity
 FILE: FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
@@ -203,7 +262,7 @@ FILE: 2023-04-frankencoin/contracts/MintingHub.sol
 [MintingHub.sol#L108](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L108)
 ##
 
-## [G-8] Don't declare the variable inside the loops 
+## [G-10] Don't declare the variable inside the loops 
 
 In every iterations the new variables instance created this will consumes more gas . So just declare variables outside the loop and only use inside to save gas 
 
@@ -221,7 +280,7 @@ for (uint256 i = 0; i<addressesToWipe.length; i++){
 
 ##
 
-## [G-9] Empty blocks should be removed to save deployment cost 
+## [G-11] Empty blocks should be removed to save deployment cost 
 
 ```solidity
 
@@ -235,7 +294,39 @@ FILE: ERC20.sol
 
 ##
 
-## [G-10] 
+## [G-12] Functions should be used instead of modifiers to save gas 
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+modifier noCooldown() {
+        if (block.timestamp <= cooldown) revert Hot();
+        _;
+    }
+
+
+    modifier noChallenge() {
+        if (challengedAmount > 0) revert Challenged();
+        _;
+    }
+
+
+    modifier onlyHub() {
+        if (msg.sender != address(hub)) revert NotHub();
+        _;
+    }
+
+```
+[Position.sol#L373-L390](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L373-L390)
+
+##
+
+## [G-13] 
+
+
+
+
+
 
 
 GAS‑1	abi.encode() is less efficient than abi.encodepacked()	2	200
