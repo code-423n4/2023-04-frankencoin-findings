@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "anodaram",
+  "risk": "2",
+  "title": "0.01 for THRESH_DEC18 can cause an error bigger than 1e-6",
+  "issueId": 281,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/281"
+}
