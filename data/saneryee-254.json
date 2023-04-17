@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "saneryee",
+  "risk": "2",
+  "title": "Dangerous shadowing of state variables",
+  "issueId": 254,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/254"
+}
