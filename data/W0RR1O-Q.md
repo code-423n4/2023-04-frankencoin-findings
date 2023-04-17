@@ -53,3 +53,15 @@ function transferOwnership(address newOwner) public onlyOwner {
 
 
 ```
+
+[L-03] Potential name confusion in the function `votes` in the contracts `Equity.sol`
+=====================================================================================
+The issue with the `votes` function is that it has two functions with the same name, which causes a name conflict. The first `votes` function takes only one argument, which is the sender's address and returns the number of votes for the sender. The second `votes` function takes two arguments, one sender's address, and an array of helper addresses, and returns the total number of votes for both the sender and the helper addresses.
+
+This is problematic because the two functions have the same name, but different input parameters, which can lead to confusion and potential errors when calling the function. When calling the function, it may not be clear which version of the votes function is being called, especially if the arguments are not explicitly stated. This could result in unexpected behavior and may cause errors in the contract.
+
+## Proof Of Concept
+* https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L190-#L202
+
+## Recommended mitigation steps
+To resolve this issue, one of the `votes` functions should be renamed to avoid the naming conflict. For example, the first function could be renamed `votesForSender` to clarify its purpose, while the second function could remain as `votes` since it takes both the sender and the helper addresses as arguments. By doing this, the contract code becomes more explicit and easy to understand.
