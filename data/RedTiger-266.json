@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "RedTiger",
+  "risk": "2",
+  "title": "BurnFrom can be used by a minter to burn tokens not minted by it.",
+  "issueId": 266,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/266"
+}
