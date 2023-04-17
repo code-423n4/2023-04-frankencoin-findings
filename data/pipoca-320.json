@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "pipoca",
+  "risk": "2",
+  "title": "No Maximum Delegation Depth in canVoteFor Function",
+  "issueId": 320,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/320"
+}
