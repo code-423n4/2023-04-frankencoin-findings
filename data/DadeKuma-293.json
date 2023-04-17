@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "DadeKuma",
+  "risk": "3",
+  "title": "Reentrancy when ending a challenge results in loss of funds due to multiple endings of the same challenge",
+  "issueId": 293,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/293"
+}
