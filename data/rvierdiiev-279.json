@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "rvierdiiev",
+  "risk": "2",
+  "title": "Position.notifyChallengeSucceeded function will make bid to be 0 in case when _bid * colBal < e18",
+  "issueId": 279,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/279"
+}
