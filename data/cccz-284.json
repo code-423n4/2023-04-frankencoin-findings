@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "cccz",
+  "risk": "3",
+  "title": "Position.adjustPrice can front run MintingHub.launchChallenge, causing the challenger to lose assets.",
+  "issueId": 284,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/284"
+}
