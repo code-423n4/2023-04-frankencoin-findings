@@ -12,3 +12,44 @@ Function `adjustRecipientVoteAnchor`:
 
 ## Recommended Mitigation Steps
 Consider using OpenZeppelin’s SafeCast library to prevent unexpected overflows when casting from uint256.
+
+[L-02] Ownership may be burned
+================================
+In the contract `Ownable.sol` it was observed that the function `transferOwnership` does not check transfer to `address(0)` which effectively burn the ownership.
+
+## Proof Of Concept
+* https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Ownable.sol#L27-L43
+```solidity
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Can only be called by the current owner.
+     */
+    function transferOwnership(address newOwner) public onlyOwner {
+        setOwner(newOwner);
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Internal function without access restriction.
+     */
+    function setOwner(address newOwner) internal {
+        address oldOwner = owner;
+        owner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
+    }
+
+```
+The function `transferOwnership` above takes the address of `newOwner` as an argument and is directly passed to the function `setOwner`. However, there is no checks in both of these functions to ensure that the `newOwner` is not `address(0)`. This means that the owner can transfer the ownership to `address(0)` which effectively burn the ownership.
+
+## Recommended mitigation steps
+It is recommended to implement a validation check to ensure that the ownership is not transferred to `address(0)`.
+Example:
+```solidity
+
+function transferOwnership(address newOwner) public onlyOwner {
+    require(newOwner != address(0), "New owner cannot be zero address");
+    setOwner(newOwner);
+}
+
+
+```
