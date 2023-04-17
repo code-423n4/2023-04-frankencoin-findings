@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "bughunter007",
+  "risk": "2",
+  "title": "Once position's collateral is fully transferred bidders, the remaining successful challenges on that position are not rewarded.",
+  "issueId": 315,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/315"
+}
