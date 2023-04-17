@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "pipoca",
+  "risk": "2",
+  "title": "Denial of Service Attack in Position.sol",
+  "issueId": 262,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/262"
+}
