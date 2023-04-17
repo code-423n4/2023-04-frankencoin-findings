@@ -65,3 +65,15 @@ This is problematic because the two functions have the same name, but different 
 
 ## Recommended mitigation steps
 To resolve this issue, one of the `votes` functions should be renamed to avoid the naming conflict. For example, the first function could be renamed `votesForSender` to clarify its purpose, while the second function could remain as `votes` since it takes both the sender and the helper addresses as arguments. By doing this, the contract code becomes more explicit and easy to understand.
+
+[L-04] Unexpected behavior in the `votes` in the contract `Equity.sol`
+=======================================================================
+The issue could allow an attacker to bypass the `canVoteFor` function, which verifies that the sender is allowed to vote for their helpers. This could lead to the attacker being able to manipulate the votes of other users in the contract and potentially gain control over the voting process.
+
+An attacker could create a helper account and call the `votes` function with the sender's address and the helper's address. If the helper account is not authorized to vote for the sender, the canVoteFor function should return false and the transaction should revert. However, due to the vulnerability in the `votes` function, the attacker would be able to bypass this check and get the total number of votes for the sender and the helper.
+
+## Proof Of Concept
+* https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L190-#L202
+
+## Recommended mitigation steps
+The `canVoteFor` function should be called before calculating the votes for the sender and their helpers. Additionally, the function should include checks to ensure that helpers are unique and not equal to the sender. 
