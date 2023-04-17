@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xStalin",
+  "risk": "2",
+  "title": "Hardcoded value 1:1 to the peg of external Swiss StableCoins when minting new Franks (ZCHF) in a Bridge",
+  "issueId": 240,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/240"
+}
