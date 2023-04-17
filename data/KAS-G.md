@@ -35,3 +35,8 @@ contract ChallengeSystem {
 In this version of the code, the Challenge struct is stored in a mapping called challenges, which maps uint ids to Challenge structs. Each time a new challenge is created, the numChallenges counter is incremented and a new Challenge struct is added to the challenges mapping with the new numChallenges value as its id.
 
 Using a mapping to store the Challenge struct can help improve the scalability of the system, since accessing and updating elements in a mapping typically has a lower gas cost than accessing and iterating over an array. Additionally, since the mapping only stores the challenges that have actually been created, it can potentially save storage space compared to an array that might have a large number of empty or unused elements.
+
+
+2:
+https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol
+Combining state variables into a single struct can reduce gas usage, especially if the struct is used frequently. For example, instead of having separate totalVotesAtAnchor and totalVotesAnchorTime variables, you could create a VoteData struct with both variables and use it throughout the contract.
