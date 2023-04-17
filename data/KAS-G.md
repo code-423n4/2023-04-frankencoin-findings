@@ -54,3 +54,9 @@ modifier validTransfer(address recipient, uint256 amount) {
     _;
 }
 With this modifier, you no longer need to check the recipient address again and again in multiple functions, which will reduce the gas cost.
+
+5:
+https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MathUtil.sol
+There is two possibilities to reduce the gas
+Use ** operator instead of _power3 function: Solidity has a built-in exponentiation operator ** which can be used instead of the _power3 function. This would eliminate the need to call a separate function and reduce gas costs.
+Simplify division in _divD18 function: Instead of multiplying the numerator by ONE_DEC18 and then dividing by the denominator, we can simply multiply the numerator by ONE_DEC18 / _b. This eliminates the need for a separate division operation and reduces gas costs.
