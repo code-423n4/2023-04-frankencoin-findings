@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Matin",
+  "risk": "2",
+  "title": "Precision loss due to a division before multiplication operation",
+  "issueId": 267,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/267"
+}
