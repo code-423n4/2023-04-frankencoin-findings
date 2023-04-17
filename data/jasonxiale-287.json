@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "jasonxiale",
+  "risk": "2",
+  "title": "safeTransfer/safeTransferFrom is recommended instead of transfer/transferFrom",
+  "issueId": 287,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/287"
+}
