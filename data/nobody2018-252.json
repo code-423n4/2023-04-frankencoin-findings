@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "nobody2018",
+  "risk": "2",
+  "title": "Someone in _helpers can front-run Frankencoin.denyMinter/Position.deny  causing tx revert",
+  "issueId": 252,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/252"
+}
