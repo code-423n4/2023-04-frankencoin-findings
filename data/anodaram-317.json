@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "anodaram",
+  "risk": "3",
+  "title": "Using wrong index in Equity.restructureCapTable",
+  "issueId": 317,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/317"
+}
