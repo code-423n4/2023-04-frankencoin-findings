@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "RaymondFam",
+  "risk": "2",
+  "title": "Large position can be exploited by a crafty challenger via splitChallenge()",
+  "issueId": 251,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/251"
+}
