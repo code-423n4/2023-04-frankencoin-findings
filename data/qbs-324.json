@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "qbs",
+  "risk": "2",
+  "title": "Lack of pause functionality in StablecoinBridge contract",
+  "issueId": 324,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/324"
+}
