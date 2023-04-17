@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "nobody2018",
+  "risk": "2",
+  "title": "User can use clonePosition to reduce the limit of an new position to 0",
+  "issueId": 248,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/248"
+}
