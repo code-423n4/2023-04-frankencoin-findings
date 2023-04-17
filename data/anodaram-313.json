@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "anodaram",
+  "risk": "2",
+  "title": "In Frankencoin, a malicious user can deny minter's actions by approving small amount to minter",
+  "issueId": 313,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/313"
+}
