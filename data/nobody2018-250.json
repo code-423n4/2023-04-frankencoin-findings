@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "nobody2018",
+  "risk": "2",
+  "title": "Equity.restructureCapTable will only burn addressesToWipe[0]",
+  "issueId": 250,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/250"
+}
