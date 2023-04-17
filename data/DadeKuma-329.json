@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "DadeKuma",
+  "risk": "3",
+  "title": "A bidder can reenter a bid while averting a challenge, and the funds of some other challengers will be permanently locked",
+  "issueId": 329,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/329"
+}
