@@ -1,4 +1,4 @@
-[L-01] Attempt to transfer the previous bid back to its bidder even though the potential new bidder might revert because is not bidding enough to overbid the current highest bid
+[L-01] Attempt to transfer the previous bid back to its bidder even though the potential new bid might revert because is not bidding enough to overbid the current highest bid
 
 https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MintingHub.sol#L203-L205
 Checking if challenge.bid (current highest bid) is greater than 0 will always end up transferring back the bid to the current highest bidder, but at the point it is still unknown if the new bid is actually high enough to overbid the current highest bid, such a validation happens later in the code, in line:
