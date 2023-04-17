@@ -42,3 +42,15 @@ Combining state variables into a single struct can reduce gas usage, especially 
 https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol
 If some FPS holders were to act maliciously or with self-interest, they could potentially undermine the functioning of the system and cause it to fail. For example, they could vote to approve transactions that are not in the best interest of the system, or they could collude with other FPS holders to manipulate the system in their favor.
 To address this vulnerability, the contract should have mechanisms in place to detect and prevent any malicious activity by FPS holders. One potential solution is to implement a voting mechanism that requires a certain threshold of votes from FPS holders to approve any transactions. This would make it more difficult for a small group of FPS holders to manipulate the system in their favor.
+
+4:
+https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/ERC20.sol
+One possible way to save gas in this code is by using a modifier to check the validity of the recipient address and the amount to be transferred, instead of putting those checks in each transfer function.
+Here's an example implementation of such a modifier:
+modifier validTransfer(address recipient, uint256 amount) {
+    require(recipient != address(0), "Transfer to zero address");
+    require(amount > 0, "Transfer amount must be greater than zero");
+    require(_balances[msg.sender] >= amount, "Insufficient balance");
+    _;
+}
+With this modifier, you no longer need to check the recipient address again and again in multiple functions, which will reduce the gas cost.
