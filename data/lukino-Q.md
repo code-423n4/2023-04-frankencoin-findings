@@ -10,3 +10,27 @@ The function [restructureCapTable](https://github.com/code-423n4/2023-04-franken
             _burn(current, balanceOf(current));
         }
 ```
+[I-01]**Some comments from openzeppelin/ERC20 are still there but are useless**
+In [ERC20](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/ERC20.sol) there is comment useless stating the difference from openzeppelin/ERC20 like [this](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20.sol#L36-L39)
+
+[I-02]**Some comments has wrong description**
+In [StablecoinBridge](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/StablecoinBridge.sol)
+there is [comment](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/StablecoinBridge.sol#L59-L62) that explain burn function but it actually describes the other burn [function](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/StablecoinBridge.sol#L55-L57) it is recommended to move the actual comment to the other function and writes new comments for this burn function
+```solidity
+    /**
+     * Burn the indicated amount of Frankencoin and send the same number of source coin to the caller.
+     * No allowance required.
+     */
+    function burn(uint256 amount) external {
+        burnInternal(msg.sender, msg.sender, amount);
+    }
+
+    /**
+     * Burn the indicated amount of Frankencoin and send the same number of source coin to the target specified by the caller.
+     * No allowance required.
+     */
+    function burn(address target, uint256 amount) external {
+        burnInternal(msg.sender, target, amount);
+    }
+```
+
