@@ -5,11 +5,12 @@
 | [G-03] | `unchecked` block can be implemented for `ERC20._mint` | 1 |  - |
 | [G-04] | `unchecked` block can be implemented for `ERC20._burn` | 1 |  - |
 | [G-05] | Unchecked blocks when there is previous checks can be implemented | 2 | - |
-| [G-06] | State variables can be packed in fewer storage slots | 2 |  15000 |
+| [G-06] | State variables can be packed in fewer storage slots | 2 |  2000 |
 | [G-07] | Use nested `if` statements to avoid multiple check combinations using `&&` | 4 | 24 |
 | [G-08] | `Ownable.onlyOwner()` modifier can be refactored | 1 | - |
+| [G-09] | Multiple address mappings can be combined into a single mapping of an address to a struct, where appropriate | 1 | - |
 
-| Total Found Issues | 8 |
+| Total Found Issues | 9 |
 |:--:|:--:|
 
 
@@ -189,10 +190,10 @@ Gas savings applies to all functions that calls `Position.notifyRepaidInternal()
 38:    uint32 public immutable mintingFeePPM; /// @audit 4 bytes can be packed
 39:    uint32 public immutable reserveContribution; /// @audit 4 bytes can be packed
 ```
-Each slot of storage can store 32 bytes of data. The first write to an EVM storage position costs 20000. Subsequent writes to an existing storage position costs 5000. Ensure storage packing rules to save gas.
+
 
 Recommendation:
-Saves 25000 - 10000 = 15000 gas
+Saves 1 slot (2000 gas)
 ```solidity
 address public immutable original; // originals point to themselves, clone to their origin
 uint32 public immutable mintingFeePPM;
@@ -258,3 +259,14 @@ Gas savings applies to all functions that uses the `onlyOwner()` modifier. For e
 | After | 9887    | 16263  | 9887 | 39752 |
 
 
+### [G-09] Multiple address mappings can be combined into a single mapping of an address to a struct, where appropriate
+[Frankencoin.sol#L45](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L45)
+[Frankencoin.sol#L50](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L50)
+```solidity
+/Frankencoin.sol
+45:   mapping (address => uint256) public minters;
+
+50:   mapping (address => address) public positions;
+```
+
+Saves a storage slot for the mapping. Depending on the circumstances and sizes of types, can avoid a Gsset (20000 gas) per mapping combined. Reads and subsequent writes can also be cheaper when a function requires both values and they both fit in the same storage slot. 
