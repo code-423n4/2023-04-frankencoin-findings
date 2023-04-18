@@ -1,3 +1,6 @@
+## Missing cancel option on bid() and end()
+Consider adding checks on [`bid()`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MintingHub.sol#L199-L229) and [`end()`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MintingHub.sol#L252-L276) such that the functions will have `challenges[_challengeNumber]` and `challenge.position.challengedAmount` deleted when `challenge.position.collateral() == 0` while returning `challenge.bid` to `challenge.bidder`. This early termination is going to save a huge amount of gas making all futile zero transfers.
+
 ## Unneeded instant cast
 Casting an instant to a contract type is unnecessary and is a waste of gas. Do this only when you are casting the contract address.
 
