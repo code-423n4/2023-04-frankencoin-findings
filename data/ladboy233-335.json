@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ladboy233",
+  "risk": "2",
+  "title": "User can set arbitrary minter when totalSupply of the FrankenCoin is 0 ",
+  "issueId": 335,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/335"
+}
