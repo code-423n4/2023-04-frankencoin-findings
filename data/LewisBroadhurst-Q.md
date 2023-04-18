@@ -52,3 +52,49 @@ function initializeClone(address owner, uint256 _price, uint256 _limit, uint256 
 
 Is there a good reason as to why it should not simply be msg.sender/hub?
 
+## [NC-01] Unclear variable naming
+
+Confusing variable naming in the constructor.
+Consider changing `other` to `sourceStablecoin` as the comment suggests.
+Much clearer for devs/auditer to understand what the variable is.
+
+```
+// StablecoinBridge.sol
+
+contract StablecoinBridge {
+
+    IERC20 public immutable chf; // the source stablecoin
+
+    constructor(address other, address zchfAddress, uint256 limit_){
+        chf = IERC20(other);
+        zchf = IFrankencoin(zchfAddress);
+        horizon = block.timestamp + 52 weeks;
+        limit = limit_;
+    }
+// ...
+```
+
+## [NC-02] Overly complicated code
+
+The following code seems overly complicated for what it is trying to acheive. It is not called elsewhere in the supplied contracts and therefore could be simplified.
+
+```
+function requireOwner(address sender) internal view {
+    if (owner != sender) revert NotOwner();
+}
+
+modifier onlyOwner() {
+    requireOwner(msg.sender);
+    _;
+}
+```
+
+```
+// leaner version of the above
+modifier onlyOwnerAlternative() {
+    if (owner != msg.sender) revert NotOwner();
+    _;
+}
+```
+
+Sponsor may have legitimate reasons for this code, but it is not clear from the supplied contracts.
