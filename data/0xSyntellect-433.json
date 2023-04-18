@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xSyntellect",
+  "risk": "2",
+  "title": "Description of Challenge in docs doesn't match the function behaviour",
+  "issueId": 433,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/433"
+}
