@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "cccz",
+  "risk": "2",
+  "title": "Later challengers can bid on the previous challenge to extend the expiration time of the previous challenge, so that their own challenge can succeed before the previous challenge and get challenge rewards",
+  "issueId": 349,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/349"
+}
