@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "evmboi32",
+  "risk": "3",
+  "title": "Malicious token can mint unlimited ZCHF tokens",
+  "issueId": 467,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/467"
+}
