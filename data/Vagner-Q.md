@@ -1,0 +1,3 @@
+## [L-01] Function `restructureCapTable` will always `_burn` from the first address of the array so there is no reason for an array
+
+The function `restructureCapTable` can be used to restructure the system in special cases and this functions burns the shares of some specific addresses passed in an array. The function itself it is burning the shares from the same address every iteration as can be seen here https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L312-L315. In this case there is no reason to have an array of addresses since it will always burn from the first one. Use as argument only one address or change `addressesToWipe[0]` to `addressesToWipe[i]`.
