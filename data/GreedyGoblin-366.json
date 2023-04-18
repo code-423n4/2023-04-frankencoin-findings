@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "GreedyGoblin",
+  "risk": "2",
+  "title": "Collateral stuck for until expiration time when denied and nobody challenges it during the initialization time.",
+  "issueId": 366,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/366"
+}
