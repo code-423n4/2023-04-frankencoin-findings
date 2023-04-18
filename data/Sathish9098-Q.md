@@ -250,9 +250,9 @@ function openPosition(
 
 ##
 
-## [L-7] Function may run out of gas
+## [L-7] Function Calls in Loop Could Lead to Denial of Service
 
-When we give inputs in arrays the length must be checked before proceed loops. If the length too high the function may run out of gas 
+Function calls made in unbounded loop are error-prone with potential resource exhaustion as it can trap the contract due to the gas limitations or failed transactions 
 
 
 ```solidity
@@ -268,7 +268,139 @@ for (uint i=0; i<helpers.length; i++){
 
 ##
 
-## [L-8] 
+## [L-8] Use .call instead of .transfer to send ether
+
+.transfer will relay 2300 gas and .call will relay all the gas. If the receive/fallback function from the recipient proxy contract has complex logic, using .transfer will fail, causing integration issues
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Equity.sol
+
+279: zchf.transfer(target, proceeds);
+
+```
+[Equity.sol#L279](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L279)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/MintingHub.sol
+
+294:  challenge.position.collateral().transfer(challenge.challenger, challenge.size);
+204:  zchf.transfer(challenge.bidder, challenge.bid); // return old bid
+211:  challenge.position.collateral().transfer(msg.sender, challenge.size);
+268:  zchf.transfer(owner, effectiveBid - fundsNeeded);
+
+```
+[MintingHub.sol#L294](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L294)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+253: IERC20(token).transfer(target, amount);
+269: IERC20(collateral).transfer(target, amount);
+
+```
+[Position.sol#L253](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L253)
+
+##
+
+## [L-9] Project Upgrade and Stop Scenario should be
+
+At the start of the project, the system may need to be stopped or upgraded, I suggest you have a script beforehand and add it to the documentation. This can also be called an ” EMERGENCY STOP (CIRCUIT BREAKER) PATTERN “.
+
+https://github.com/maxwoe/solidity_patterns/blob/master/security/EmergencyStop.sol
+
+##
+
+## [L-10]  ALLOWS MALLEABLE SECP256K1 SIGNATURES 
+
+Here, the ecrecover() method doesn’t check the s range.
+
+Homestead (EIP-2) added this limitation, however the precompile remained unaltered. The majority of libraries, including OpenZeppelin, do this check.
+
+Since an order can only be confirmed once and its hash is saved, there doesn’t seem to be a serious danger in existing use cases
+
+https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7201e6707f6631d9499a569f492870ebdd4133cf/contracts/utils/cryptography/ECDSA.sol#L138-L149
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/ERC20PermitLight.sol
+
+ address recoveredAddress = ecrecover(
+                keccak256(
+                    abi.encodePacked(
+                        "\x19\x01",
+                        DOMAIN_SEPARATOR(),
+                        keccak256(
+                            abi.encode(
+                                // keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)"),
+                                bytes32(0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9),
+                                owner,
+                                spender,
+                                value,
+                                nonces[owner]++,
+                                deadline
+                            )
+                        )
+                    )
+                ),
+                v,
+                r,
+                s
+            );
+
+```
+[ERC20PermitLight.sol#L33-L54](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20PermitLight.sol#L33-L54)
+
+##
+
+## [L-11] AVOID HARDCODED VALUES
+
+It is not good practice to hardcode values, but if you are dealing with addresses much less, these can change between implementations, networks or projects, so it is convenient to remove these values from the source code
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/ERC20PermitLight.sol
+
+41:  bytes32(0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9),
+66:  bytes32(0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218),
+
+```
+[ERC20PermitLight.sol#L41](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20PermitLight.sol#L41)
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/PositionFactory.sol#L41
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/PositionFactory.sol#L43
+
+##
+
+## [L-12] Front running attacks by the onlyOwner
+
+owner value is not a constant value and can be changed with transferOwnership() function, before a function using setOwner state variable value in the project, transferOwnership function can be triggered by onlyOwner and operations can be blocked
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Ownable.sol
+
+ function transferOwnership(address newOwner) public onlyOwner {
+        setOwner(newOwner);
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Internal function without access restriction.
+     */
+    function setOwner(address newOwner) internal {
+        address oldOwner = owner;
+        owner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
+    }
+
+
+```
+
+##
+
+## [L-13] 
+
+
+
+
 
 # NON CRITICAL FINDINGS
 
@@ -298,6 +430,14 @@ FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
 
 ```
 [Frankencoin.sol#L31](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L31)
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L30
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L31
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20.sol#L51
+
+
 
 ##
 
@@ -345,21 +485,10 @@ FILE: 2023-04-frankencoin/contracts/Equity.sol
 ```
 [Equity.sol#L144](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L144)
 
-```solidity
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Ownable.sol#L39
 
-```
-```solidity
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Ownable.sol#L45
 
-```
-```solidity
-
-```
-```solidity
-
-```
-```solidity
-
-```
 ##
 
 ## [NC-4] Use scientific notation (e.g. 1e18) rather than exponentiation (e.g. 10**18)
@@ -446,6 +575,151 @@ FILE: 2023-04-frankencoin/contracts/Equity.sol
 
 ```
 [Equity.sol#L59](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L59)
+
+##
+
+## [NC-10] NO SAME VALUE INPUT CONTROL 
+
+```solidity
+FILE : 2023-04-frankencoin/contracts/Ownable.sol
+
+  function setOwner(address newOwner) internal {
+        address oldOwner = owner;
+        owner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
+    }
+
+```
+[Ownable.sol#L39-L43](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Ownable.sol#L39-L43)
+
+##
+
+## [NC-11] Contract layout and order of functions
+
+The Solidity style guide [recommends](https://docs.soliditylang.org/en/v0.8.17/style-guide.html#order-of-layout)
+
+Declare internal functions bellow the external/public functions 
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L268-L304
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L188-L199
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L266-L275
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L102-L125
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20.sol#L97-L108
+
+##
+
+## [NC-12] Constant redefined elsewhere
+
+Consider defining in only one contract so that values cannot become out of sync when only one location is updated.
+
+A cheap way to store constants in a single location is to create an internal constant in a library. If the variable is a local cache of another contract’s value, consider making the cache variable internal or private, which will require external users to query the contract with the source of truth, so that callers don’t get out of sync.
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L20-L26
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L39-L59
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MathUtil.sol#L10-L11
+
+##
+
+## [NC-13] According to the syntax rules, use => mapping ( instead of => mapping( using spaces as keyword
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/ERC20PermitLight.sol
+
+- 15: mapping(address => uint256) public nonces;
+- 15: mapping (address => uint256) public nonces;
+```
+[ERC20PermitLight.sol#L15](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20PermitLight.sol#L15)
+
+##
+
+## [NC-14] Tokens accidentally sent to the contract cannot be recovered
+
+It can’t be recovered if the tokens accidentally arrive at the contract address, which has happened to many popular projects, so I recommend adding a recovery code to your critical contracts
+
+### Recommended Mitigation Steps
+Add this code:
+```solidity
+ /**
+  * @notice Sends ERC20 tokens trapped in contract to external address
+  * @dev Onlyowner is allowed to make this function call
+  * @param account is the receiving address
+  * @param externalToken is the token being sent
+  * @param amount is the quantity being sent
+  * @return boolean value indicating whether the operation succeeded.
+  *
+ */
+  function rescueERC20(address account, address externalToken, uint256 amount) public onlyOwner returns (bool) {
+    IERC20(externalToken).transfer(account, amount);
+    return true;
+  }
+}
+```
+
+##
+
+## [NC-15] Use SMTChecker
+
+The highest tier of smart contract behavior assurance is formal mathematical verification. All assertions that are made are guaranteed to be true across all inputs → The quality of your asserts is the quality of your verification
+
+https://twitter.com/0xOwenThurm/status/1614359896350425088?t=dbG9gHFigBX85Rv29lOjIQ&s=19
+
+##
+
+## [NC-16] Constants on the left are better
+
+If you use the constant first you support structures that veil programming errors. And one should only produce code either to add functionality, fix an programming error or trying to support structures to avoid programming errors (like design patterns).
+
+https://www.moserware.com/2008/01/constants-on-left-are-better-but-this.html
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L86
+
+##
+
+## [NC-17] Assembly Codes Specific – Should Have Comments
+
+Since this is a low level language that is more difficult to parse by readers, include extensive documentation, comments on the rationale behind its use, clearly explaining what each assembly instruction does.
+
+This will make it easier for users to trust the code, for reviewers to validate the code, and for developers to build on or update the code.
+
+Note that using Assembly removes several important security features of Solidity, which can make the code more insecure and more error-prone
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/PositionFactory.sol
+
+39:   assembly {
+
+```
+[PositionFactory.sol#L39](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/PositionFactory.sol#L39)
+
+##
+
+## [NC-18] Take advantage of Custom Error’s return value property
+
+An important feature of Custom Error is that values such as address, tokenID, msg.value can be written inside the () sign, this kind of approach provides a serious advantage in debugging and examining the revert details of dapps such as tenderly
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+77:  if(_coll < minimumCollateral) revert InsufficientCollateral();
+110: if (block.timestamp >= start) revert TooLate();
+194: if (minted + amount > limit) revert LimitExceeded();
+294: if (size < minimumCollateral && size < collateralBalance()) revert ChallengeTooSmall();
+
+```
+[Position.sol#L77](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L77)
+
+##
+
+## [NC-19] 
+
+
+
 
 
 
