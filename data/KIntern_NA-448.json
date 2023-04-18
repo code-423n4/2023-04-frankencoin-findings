@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "KIntern_NA",
+  "risk": "2",
+  "title": "Transfering tokens to address(0) can happen by mistake",
+  "issueId": 448,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/448"
+}
