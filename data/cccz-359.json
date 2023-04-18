@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "cccz",
+  "risk": "3",
+  "title": "When the totalSupply is 0, anyone can call suggestMinter to be the minter",
+  "issueId": 359,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/359"
+}
