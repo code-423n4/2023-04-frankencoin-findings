@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ladboy233",
+  "risk": "2",
+  "title": "Minter can overwrite other minter's position and DOS the MintingHub.sol",
+  "issueId": 394,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/394"
+}
