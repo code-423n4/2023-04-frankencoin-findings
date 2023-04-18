@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "jayfromthe13th",
+  "risk": "3",
+  "title": "Insecure Initialization Period Setting",
+  "issueId": 500,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/500"
+}
