@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "fs0c",
+  "risk": "3",
+  "title": "Loss of tokens in case ERC777 are used due to reentry in bid functions",
+  "issueId": 465,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/465"
+}
