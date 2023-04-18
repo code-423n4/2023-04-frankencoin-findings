@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "cccz",
+  "risk": "2",
+  "title": "When block.timestamp = = minters [_ minter], denyMinter should not be allowed to execute",
+  "issueId": 370,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/370"
+}
