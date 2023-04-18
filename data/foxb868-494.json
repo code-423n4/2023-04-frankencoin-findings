@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "foxb868",
+  "risk": "2",
+  "title": "Invalid Address Exploit in onTokenTransfer that can Causes Loss of Funds and Devaluation.",
+  "issueId": 494,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/494"
+}
