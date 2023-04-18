@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "BGSecurity",
+  "risk": "2",
+  "title": "Paying `_applicationFee` can be omitted",
+  "issueId": 474,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/474"
+}
