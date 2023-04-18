@@ -58,6 +58,7 @@ is recommended changing it to:
         mintInternal(target, amount);
     }
 ```
+stating that the target is who will receive the zchf in [**mintInternal**](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/StablecoinBridge.sol#L49-L53)
 
 
 
