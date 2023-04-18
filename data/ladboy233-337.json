@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ladboy233",
+  "risk": "2",
+  "title": "Minter role privilege never expires after the minter role pass the application period",
+  "issueId": 337,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/337"
+}
