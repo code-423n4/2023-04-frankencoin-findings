@@ -35,9 +35,9 @@ minted state variable should be cached with stack variable
 
 ##
 
-## [G-2] Copying struct to memory can be more expensive than just reading from storage
+## [G-2] Using storage instead of memory for structs/arrays saves gas
 
-I suggest using the storage keyword instead of the memory one, as the copy in memory is wasting some MSTOREs and MLOADs.
+When fetching data from a storage location, assigning the data to a memory variable causes all fields of the struct/array to be read from storage, which incurs a Gcoldsload (2100 gas) for each field of the struct/array. If the fields are read from the new memory variable, they incur an additional MLOAD rather than a cheap stack read. Instead of declearing the variable with the memory keyword, declaring the variable with the storage keyword and caching any fields that need to be re-read in stack variables, will be much cheaper, only incuring the Gcoldsload for the fields actually read. The only time it makes sense to read the whole struct/array into a memory variable, is if the full struct/array is being returned by the function, is being passed to a function that requires memory, or if the array/struct is being read from another memory array/struct
 
 ```solidity
 FILE: 2023-04-frankencoin/contracts/MintingHub.sol
@@ -148,6 +148,7 @@ constructor(uint256 _minApplicationPeriod) ERC20(18){
 ```
 [Frankencoin.sol#L59-L62](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L59-L62)
 
+
 ##
 
 ## [G-6] Use nested if and, avoid multiple check combinations
@@ -213,7 +214,17 @@ totalSupply() value should be cached instead of calling multiple times
 ```
 [Frankencoin.sol#L84-L85](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L84-L85)
 
+
 ```solidity
+FILE: 2023-04-frankencoin/contracts/Equity.sol
+
+anchorTime() function results should be cached 
+
+function adjustTotalVotes(address from, uint256 amount, uint256 roundingLoss) internal {
+        uint256 lostVotes = from == address(0x0) ? 0 : (anchorTime() - voteAnchor[from]) * amount;
+        totalVotesAtAnchor = uint192(totalVotes() - roundingLoss - lostVotes);
+        totalVotesAnchorTime = anchorTime();
+    }
 ```
 ```solidity
 ```
@@ -321,7 +332,44 @@ modifier noCooldown() {
 
 ##
 
-## [G-13] 
+## [G-13] Avoid contract existence checks by using low level calls
+
+Prior to 0.8.10 the compiler inserted extra code, including EXTCODESIZE (100 gas), to check for contract existence for external function calls. In more recent solidity versions, the compiler will not insert these checks if the external call has a return value. Similar behavior can be achieved in earlier versions by using low-level calls, since low level calls never check for contract existence
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Equity.sol
+
+109:  return VALUATION_FACTOR * zchf.equity() * ONE_DEC18 / totalSupply();
+243:  uint256 equity = zchf.equity();
+279:  zchf.transfer(target, proceeds);
+292:  uint256 capital = zchf.equity();
+310:  require(zchf.equity() < MINIMUM_EQUITY); 
+
+```
+[Equity.sol#L109](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L109)
+
+##
+
+## [G-14] Sort Solidity operations using short-circuit mode
+
+Short-circuiting is a solidity contract development model that uses OR/AND logic to sequence different cost operations. It puts low gas cost operations in the front and high gas cost operations in the back, so that if the front is low If the cost operation is feasible, you can skip (short-circuit) the subsequent high-cost Ethereum virtual machine operation.
+
+```
+
+//f(x) is a low gas cost operation 
+//g(y) is a high gas cost operation 
+//Sort operations with different gas costs as follows 
+f(x) || g(y) 
+f(x) && g(y)
+
+```
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/MintingHub.sol
+
+
+
+```
 
 
 
