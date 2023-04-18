@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Vagner",
+  "risk": "2",
+  "title": "Challenger can DoS the Position system by bidding at his own challenge",
+  "issueId": 420,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/420"
+}
