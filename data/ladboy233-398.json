@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ladboy233",
+  "risk": "2",
+  "title": "Reentrancy in MintingHub.sol if the collateral is a ERC777 token",
+  "issueId": 398,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/398"
+}
