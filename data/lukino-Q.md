@@ -35,4 +35,29 @@ there is [comment](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb
         burnInternal(msg.sender, target, amount);
     }
 ```
+In the same contract in [mint function](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/StablecoinBridge.sol#L40-L47) there is a comment that can be dangerous 
+```solidity
+ /**
+     * Mint the target amount of Frankencoins, taking the equal amount of source coins from the sender.
+     * This only works if an allowance for the source coins has been set and the caller has enough of them.
+     */
+    function mint(address target, uint256 amount) public {
+        chf.transferFrom(msg.sender, address(this), amount);
+        mintInternal(target, amount);
+    }
+```
+is recommended changing it to:
+
+```solidity
+ /**
+     * Mint to the target specified by the caller the specified amount of Frankencoins, taking the equal amount of source coins from the sender.
+     * This only works if an allowance for the source coins has been set and the caller has enough of them.
+     */
+    function mint(address target, uint256 amount) public {
+        chf.transferFrom(msg.sender, address(this), amount);
+        mintInternal(target, amount);
+    }
+```
+
+
 
