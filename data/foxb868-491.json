@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "foxb868",
+  "risk": "2",
+  "title": "suggestMinter function does not validate minimum application fee.",
+  "issueId": 491,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/491"
+}
