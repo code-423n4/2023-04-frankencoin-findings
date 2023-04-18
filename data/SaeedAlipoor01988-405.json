@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "SaeedAlipoor01988",
+  "risk": "3",
+  "title": "front-running attack to the MintingHub.sol#L252.end() function",
+  "issueId": 405,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/405"
+}
