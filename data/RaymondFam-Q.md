@@ -107,3 +107,5 @@ For instance, the custom error instance below may be refactored as follows:
 -        if (block.timestamp >= start) revert TooLate();
 +        if (block.timestamp >= start) revert TooLate(start);
 ```
+## Position owner could shill bid after increasing the price
+A position owner attempting to mint more `ZCHF` by [increasing the price](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Position.sol#L159-L167) without increasing the collateral  could technically shill bid any challenge launched against it. This will ensure the owner take back his collateral above market price at the worst and per chance the owner could profit from a higher bid than what she has shilled or even have the challenged averted by the next bidders. 
