@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ladboy233",
+  "risk": "2",
+  "title": "During the MintingHub.sol#end function call, if the bidder address is blocklisted, the challanger's fund is locked as well",
+  "issueId": 431,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/431"
+}
