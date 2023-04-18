@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "SaeedAlipoor01988",
+  "risk": "2",
+  "title": "Challenger should provide _collateralAmount >= collateralBalance of position to launch a challenge on a position instead of more than _minCollateral ",
+  "issueId": 381,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/381"
+}
