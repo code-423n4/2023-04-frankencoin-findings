@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Lirios",
+  "risk": "2",
+  "title": "missing safety mechanism to stop position in case collateraltoken has issues",
+  "issueId": 468,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/468"
+}
