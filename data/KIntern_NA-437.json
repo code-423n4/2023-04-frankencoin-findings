@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "KIntern_NA",
+  "risk": "3",
+  "title": "An attacker can reduce a large amount of a user's equity votes by spamming transfers of small share amounts.",
+  "issueId": 437,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/437"
+}
