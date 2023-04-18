@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "rvierdiiev",
+  "risk": "3",
+  "title": "Attacker can block positions to make them liquidatable without cost",
+  "issueId": 369,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/369"
+}
