@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "KIntern_NA",
+  "risk": "3",
+  "title": "An attacker can delay the ZCHF minting and collateral withdrawing of a position by repeatedly doing both challenge and bid in a single transaction",
+  "issueId": 441,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/441"
+}
