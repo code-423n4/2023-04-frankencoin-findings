@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ladboy233",
+  "risk": "2",
+  "title": "Should not splitChallange if the challange ends, otherwise the function end can be frontruned with function splitChallange",
+  "issueId": 401,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/401"
+}
