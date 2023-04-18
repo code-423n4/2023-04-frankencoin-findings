@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "KIntern_NA",
+  "risk": "2",
+  "title": " The owner of a position can manipulate the `isClosed` function, which leads to the front-end will display incorrect states.",
+  "issueId": 446,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/446"
+}
