@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "hasmama",
+  "risk": "3",
+  "title": " Potential Incorrect Limit Calculation in clonePosition Function",
+  "issueId": 403,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/403"
+}
