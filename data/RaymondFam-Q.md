@@ -109,3 +109,43 @@ For instance, the custom error instance below may be refactored as follows:
 ```
 ## Position owner could shill bid after increasing the price
 A position owner attempting to mint more `ZCHF` by [increasing the price](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Position.sol#L159-L167) without increasing the collateral  could technically shill bid any challenge launched against it. This will ensure the owner take back his collateral above market price at the worst and per chance the owner could profit from a higher bid than what she has shilled or even have the challenged averted by the next bidders. 
+
+## Comment and code mismatch
+In the constructor of Position.sol, the minimum [`initPeriod`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Position.sol#L53) is 3 days whereas `start` is commented as one week:
+
+[File: Position.sol#L64](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Position.sol#L64)
+
+```solidity
+        start = block.timestamp + initPeriod; // one week time to deny the position
+```
+## Incorrect parameter on isPosition()
+`isPosition(spender)` generally returns zero address since it is unlikely that the minter (spender) registers itself as a position. It is non-critical here since the first condition should always suffice. Nevertheless, consider having the affected code refactored as follows unless the protocol has an intended plan other than the one aforementioned:
+
+[File: Frankencoin.sol#L102-L111](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L102-L111)
+
+```diff
+   function allowanceInternal(address owner, address spender) internal view override returns (uint256) {
+      uint256 explicit = super.allowanceInternal(owner, spender);
+      if (explicit > 0){
+         return explicit; // don't waste gas checking minter
+-      } else if (isMinter(spender) || isMinter(isPosition(spender))){
++      } else if (isMinter(spender) || isMinter(isPosition(owner))){
+         return INFINITY;
+      } else {
+         return 0;
+      }
+   }
+```
+## Sanity checks at the constructor
+Adequate zero address, zero value and boundary checks should be implemented at the constructor particularly in [Position.sol](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Position.sol#L50-L70) considering a single casual mistake could end up costing 1000 `ZCHF` of [`OPENING_FEE`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MintingHub.sol#L20). Misentering a 0 `limit`, having `mintingFeePPM` and  `reserveContribution` 1e18 instead of PPM scaled etc are just some of the costly mistakes that could transpire particularly when the user is interacting from a non-UI contract. 
+
+## Frankencoin contract owner possesses too sensitive privileges
+The deployer of the contract has too many privileges relative to standard users. The consequence is disastrous if the contract owner's private key has been compromised. 
+
+For a Frankencoin Project project this grand, it increases the likelihood that the owner will be targeted by an attacker, especially given the insufficient protection on sensitive owner private keys. The concentration of privileges creates a single point of failure, specifically on calling `mint()` to mess up with `totalSupply()` on the healthy circulation of `ZCHF`, granting minter role to any party at his/her discretion etc. 
+
+Consider:
+1. splitting privileges (e.g. via the multisig option) to ensure that no one address has excessive ownership of the system,
+2. clearly documenting the functions and implementations the owner can change,
+3. documenting the risks associated with privileged users and single points of failure, and
+4. ensuring that users are aware of all the risks associated with the system.
