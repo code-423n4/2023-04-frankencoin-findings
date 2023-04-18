@@ -1,10 +1,3 @@
-## Second check for "challenge.bidder == address(0x0) ? msg.sender " not needed 
-In the function end() line 259 ther is a check if challenge.bidder == address(0x0). This check will always be false since one requirement for this part of the code to be reached is in line 254 that require(challenge.challenger != address(0x0)). To save gas on deployment and execution the second check can be removes.
-
-### file: contracts/MintingHub.sol
-259:         address recipient = challenge.bidder == address(0x0) ? msg.sender : challenge.bidder; 
--	Change to         address recipient = challenge.bidder;
-
 # Use calldata instead of storage to save gas 
 Using calldata for arrays needs less gas than using memory.
 
