@@ -10,10 +10,10 @@ try to directly call minBid(challenge.bid) in bid() and in internal minBid(chall
 in bid() 
 minBid(challenge.bid)
 
-in minBid() public  function 
+in minBid( uint challengeBid) public  function ///
 minBid(challenge.bid)
 
-in minBid() internal function
+in minBid(uint challengeBid) internal function ///
 minBid(challenge.bid) // to calculate the minimum bid .
 
 
