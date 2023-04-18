@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "carlitox477",
+  "risk": "2",
+  "title": "Position's remaining limit is reduced by more than half when a position is cloned",
+  "issueId": 422,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/422"
+}
