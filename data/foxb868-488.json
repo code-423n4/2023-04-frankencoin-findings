@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "foxb868",
+  "risk": "3",
+  "title": "Insufficient minimum collateral check in withdrawCollateral function.",
+  "issueId": 488,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/488"
+}
