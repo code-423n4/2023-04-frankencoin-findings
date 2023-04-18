@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ladboy233",
+  "risk": "2",
+  "title": "Lack of consideration for different collateral token decimal in MintingHub.sol",
+  "issueId": 406,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/406"
+}
