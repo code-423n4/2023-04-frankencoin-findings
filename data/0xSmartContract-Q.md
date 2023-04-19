@@ -2,28 +2,29 @@
 ### Issues List
 | Number |Issues Details|Context|
 |:--:|:-------|:--:|
-|[L-01]|Danger "while" loop| 1 |
-|[L-02]|Function Calls in Loop Could Lead to Denial of Service due to Array length not being checked| 1 |
-|[L-03]|Add `salt` when creating `new Position` with `createNewPosition` function | 1 |
-|[L-04]|`votes()` functions with the same name cause confusion|1|
-|[L-05]|Missing Event for  initialize| 5 |
-|[L-06]|Use OpenZeppelin contracts by importing the latest versions instead of direct use| 1 |
-|[L-07]|Project Upgrade and Stop Scenario should be | All Contracts |
-|[L-08]|Insufficient coverage | All Contracts |
-|[L-09]|Add a timelock to `adjustPrice()` function| 1 |
-|[L-10]|Consider using OpenZeppelin's SafeCast library to prevent unexpected overflows when casting from uint256| 1 |
-|[NC-11] |Constants on the left are better|4|
-|[NC-12] |Assembly Codes Specific – Should Have Comments| 1|
-|[NC-13] |For functions, follow Solidity standard naming conventions (internal function style rule)| 23|
-|[NC-14] |Use SMTChecker|All Contracts|
-|[NC-15] |Use `uint256` instead `uint`| 2 |
-|[NC-16] |Avoid _shadowing_ `inherited state variables`| 1 |
-|[NC-17] |Repeated validation logic can be converted into a function modifier| 3 |
-|[NC-18] |Showing the actual values of numbers in NatSpec comments makes checking and reading code easier| 4 |
-|[NC-19] |Use a single file for all system-wide constants| 11 |
-|[NC-20] |Use of `_beforeTokenTransfer` is unnecessary, can be removed| 3|
+|L-01|Danger "while" loop| 1 |
+|L-02|Function Calls in Loop Could Lead to Denial of Service due to Array length not being checked| 1 |
+|L-03|Add `salt` when creating `new Position` with `createNewPosition` function | 1 |
+|L-04|`votes()` functions with the same name cause confusion|1|
+|L-05|Array size is large| 1 |
+|L-06|Use OpenZeppelin contracts by importing the latest versions instead of direct use| 1 |
+|L-07|Project Upgrade and Stop Scenario should be | All Contracts |
+|L-08|Insufficient coverage | All Contracts |
+|L-09|Add a timelock to `adjustPrice()` function| 1 |
+|L-10|Consider using OpenZeppelin's SafeCast library to prevent unexpected overflows when casting from uint256| 1 |
+|NC-11 |Constants on the left are better|4|
+|NC-12 |Assembly Codes Specific – Should Have Comments| 1|
+|NC-13 |For functions, follow Solidity standard naming conventions (internal function style rule)| 23|
+|NC-14 |Use SMTChecker|All Contracts|
+|NC-15 |Use `uint256` instead `uint`| 2 |
+|NC-16 |Avoid _shadowing_ `inherited state variables`| 1 |
+|NC-17 |Repeated validation logic can be converted into a function modifier| 3 |
+|NC-18 |Showing the actual values of numbers in NatSpec comments makes checking and reading code easier| 4 |
+|NC-19 |Use a single file for all system-wide constants| 11 |
+|NC-20 |Use of `_beforeTokenTransfer` is unnecessary, can be removed| 3|
+|NC-21|Missing Event for  initialize| 5 |
 
-Total 20 issues
+Total 21 issues
 
 
 ## [L-01] Danger "while" loop
@@ -206,51 +207,65 @@ contracts/Equity.sol:
 Use different function name by style of doing it work
 
 
-### [L-05] Missing Event for  initialize
+### [L-05] Array size is large
 
-**Context:**
+``Challenge[] public challenges`` is used to list of open challenges. Users can ``push`` to strucks in ``Challenges[]`` from ``launchChallenge()`` and ``splitChallenge()`` functions. When ``Challenge[] public challenges`` array size is large, some functions ``revert`` due to running DOS
+
+
+Therefore, the size of the **challenges** dynamic array should be checked and the upper bound should be determined. When the upper limit is reached, it should be ensured that no additional push is made.
+
+Thus, the problem of running out of gas is prevented.
+
 ```solidity
+contracts\MintingHub.sol:
 
-contracts/Equity.sol:
-  92  
-  93:     constructor(Frankencoin zchf_) ERC20(18) {
-  94:         zchf = zchf_;
-  95:     }
+  31:     Challenge[] public challenges; // list of open challenges
 
-contracts/ERC20.sol:
-  59:     constructor(uint8 _decimals) {
-  60:         decimals = _decimals;
-  61:     }
++         uint256 constant private MAX_LENGTH_CHALLENGE = 150; // max number of challenges 
 
-contracts/Frankencoin.sol:
-  59:    constructor(uint256 _minApplicationPeriod) ERC20(18){
-  60:       MIN_APPLICATION_PERIOD = _minApplicationPeriod;
-  61:       reserve = new Equity(this);
-  62:    }
-
-contracts/MintingHub.sol:
-  54:     constructor(address _zchf, address factory) {
-  55:         zchf = IFrankencoin(_zchf);
-  56:         POSITION_FACTORY = IPositionFactory(factory);
-  57:     }
-
-
-contracts/StablecoinBridge.sol:
-  26:     constructor(address other, address zchfAddress, uint256 limit_){
-  27:         chf = IERC20(other);
-  28:         zchf = IFrankencoin(zchfAddress);
-  29:         horizon = block.timestamp + 52 weeks;
-  30:         limit = limit_;
-  31:     }
+  140:     function launchChallenge(address _positionAddr, uint256 _collateralAmount) external validPos(_positionAddr) returns (uint256) {
++ 143:         uint256 pos = challenges.length;
++              require(pos < MAX_LENGTH_CHALLENGE, "max number of challenges")
+  141:         IPosition position = IPosition(_positionAddr);
+  142:         IERC20(position.collateral()).transferFrom(msg.sender, address(this), _collateralAmount);
+- 143:         uint256 pos = challenges.length;
+  144:         challenges.push(Challenge(msg.sender, position, _collateralAmount, block.timestamp + position.challengePeriod(), address(0x0), 0));
+  145:         position.notifyChallengeStarted(_collateralAmount);
+  146:         emit ChallengeStarted(msg.sender, address(position), _collateralAmount, pos);
+  147:         return pos;
+  148:     }
 
 ```
 
-**Description:**
-Events help non-contract tools to track changes, and events prevent users from being surprised by changes
-Issuing event-emit during initialization is a detail that many projects skip
+```solidity
+  156:     function splitChallenge(uint256 _challengeNumber, uint256 splitOffAmount) external returns (uint256) {
++  174:         uint256 pos = challenges.length;
++              require(pos < MAX_LENGTH_CHALLENGE, "max number of challenges")
+  157:         Challenge storage challenge = challenges[_challengeNumber];
+  158:         require(challenge.challenger != address(0x0));
+  159:         Challenge memory copy = Challenge(
+  160:             challenge.challenger,
+  161:             challenge.position,
+  162:             splitOffAmount,
+  163:             challenge.end,
+  164:             challenge.bidder,
+  165:             (challenge.bid * splitOffAmount) / challenge.size
+  166:         );
+  167:         challenge.bid -= copy.bid;
+  168:         challenge.size -= copy.size;
+  169: 
+  170:         uint256 min = IPosition(challenge.position).minimumCollateral();
+  171:         require(challenge.size >= min);
+  172:         require(copy.size >= min);
+  173: 
+- 174:         uint256 pos = challenges.length;
+  175:         challenges.push(copy);
+  176:         emit ChallengeStarted(challenge.challenger, address(challenge.position), challenge.size, _challengeNumber);
+  177:         emit ChallengeStarted(copy.challenger, address(copy.position), copy.size, pos);
+  178:         return pos;
+  179:     }
 
-**Recommendation:**
-Add Event-Emit
+```
 
 ### [L-06] Use OpenZeppelin contracts by importing the latest versions instead of direct use
 
@@ -628,3 +643,48 @@ contracts/ERC20.sol:
 
 ```
 
+### [N-21] Missing Event for  initialize
+
+**Context:**
+```solidity
+
+contracts/Equity.sol:
+  92  
+  93:     constructor(Frankencoin zchf_) ERC20(18) {
+  94:         zchf = zchf_;
+  95:     }
+
+contracts/ERC20.sol:
+  59:     constructor(uint8 _decimals) {
+  60:         decimals = _decimals;
+  61:     }
+
+contracts/Frankencoin.sol:
+  59:    constructor(uint256 _minApplicationPeriod) ERC20(18){
+  60:       MIN_APPLICATION_PERIOD = _minApplicationPeriod;
+  61:       reserve = new Equity(this);
+  62:    }
+
+contracts/MintingHub.sol:
+  54:     constructor(address _zchf, address factory) {
+  55:         zchf = IFrankencoin(_zchf);
+  56:         POSITION_FACTORY = IPositionFactory(factory);
+  57:     }
+
+
+contracts/StablecoinBridge.sol:
+  26:     constructor(address other, address zchfAddress, uint256 limit_){
+  27:         chf = IERC20(other);
+  28:         zchf = IFrankencoin(zchfAddress);
+  29:         horizon = block.timestamp + 52 weeks;
+  30:         limit = limit_;
+  31:     }
+
+```
+
+**Description:**
+Events help non-contract tools to track changes, and events prevent users from being surprised by changes
+Issuing event-emit during initialization is a detail that many projects skip
+
+**Recommendation:**
+Add Event-Emit
