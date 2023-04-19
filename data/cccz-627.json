@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "cccz",
+  "risk": "2",
+  "title": "When the collateral is fee-on-transfer tokens, challenges to the position may not be ended",
+  "issueId": 627,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/627"
+}
