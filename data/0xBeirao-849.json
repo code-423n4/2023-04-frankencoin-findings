@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xBeirao",
+  "risk": "2",
+  "title": "An attacker can call suggestMinter() right after the Frankencoin contract is deployed and make his minter accept it immediately.",
+  "issueId": 849,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/849"
+}
