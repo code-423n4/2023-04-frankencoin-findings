@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "R2",
+  "risk": "2",
+  "title": "XCHF owners may add fees on transfer and it will break bridge logic",
+  "issueId": 614,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/614"
+}
