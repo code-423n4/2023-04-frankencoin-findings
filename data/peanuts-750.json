@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "peanuts",
+  "risk": "3",
+  "title": "msg.sender should not get position owner's collateral if there are no bidders",
+  "issueId": 750,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/750"
+}
