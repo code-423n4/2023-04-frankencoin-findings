@@ -135,4 +135,90 @@ Here are some reasons why:
 https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MathUtil.sol#L11
 https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L26
 
+# [L-1] Use ERC20 OpenZeppelin contract
 
+## Comments
+The ERC20 contract in OpenZeppelin provides several advantages, including:
+
+**Time-saving**: By using OpenZeppelin's ERC20 implementation, developers can save time and effort as they don't have to start from scratch. OpenZeppelin's ERC20 contract has been audited and tested extensively, which means it is less likely to contain bugs or security vulnerabilities.
+
+**Security**: The OpenZeppelin team has a strong focus on security, and their contracts go through rigorous security audits. Using their ERC20 implementation can help developers avoid security issues that may arise from coding their own implementation from scratch.
+
+**Flexibility**: OpenZeppelin's ERC20 implementation allows developers to customize the token with additional features, such as adding a cap on the total supply, creating a burn function, or implementing a vesting schedule.
+
+**Community support**: OpenZeppelin has a large and active community, which means that developers using their ERC20 implementation can benefit from community support and contributions.
+
+**Upgradability**: OpenZeppelin's ERC20 implementation includes support for upgradability, which means that developers can upgrade their contract in a safe and controlled manner without disrupting the existing token holders.
+
+## Instances
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20.sol#L41
+
+
+# [L-2] Constants should be defined rather than using magic numbers
+
+# Comments
+
+Using magic numbers (hardcoded values) in the code makes it harder to understand and maintain. When a magic number is used, it is not immediately clear what the value represents or why it is being used. If the value needs to be changed in the future, you would have to search for all instances of the magic number in the code, which can be time-consuming and error-prone.
+
+By using constants, you can avoid these issues and make your code more robust, readable, and maintainable. Additionally, Solidity provides built-in support for constants, which allows you to define them in a way that optimizes gas usage and makes them easier to work within the context of smart contract development.
+
+# Instances
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20PermitLight.sol#L41
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20PermitLight.sol#L66
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L189
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L265
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L122
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L124
+
+
+# [L3]  Change function visibility to external
+
+## Comments
+
+External functions are more restrictive, but they are cheaper to call since they don't need to update the contract's state. Public functions are more flexible but can be more expensive to call, especially when they modify the contract's state.
+
+The function is not being called within the contract, so the external visibility flag can be used instead of public.
+
+## Code
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L91
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L109
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L132
+
+# [L-4]  Use Ownable OpenZeppelin contract
+
+## Comments
+The Ownable contract in OpenZeppelin provides several advantages over creating an access control system from scratch, including:
+
+**Security**: OpenZeppelin is a well-audited and tested library of smart contracts, which reduces the risk of vulnerabilities and errors in the code. The Ownable contract provides a secure way to manage access control in your smart contract.
+
+**Time-saving**: The Ownable contract can save a lot of time and effort in writing and testing access control functionalities. Instead of writing your own code, you can use the pre-built contract provided by OpenZeppelin and focus on other aspects of your smart contract.
+
+**Standardization**: OpenZeppelin provides a standard interface for access control, which makes it easier for other developers to understand and interact with your smart contract. By using the Ownable contract, you can benefit from the well-established conventions and best practices in the Ethereum community.
+
+**Flexibility**: The Ownable contract can be customized to fit your specific needs. You can modify the contract to add or remove access control functionalities as per your requirements.
+
+Overall, using the Ownable contract from OpenZeppelin can provide several benefits over creating an access control system from scratch, including security, time-saving, standardization, and flexibility.
+
+## Instances
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Ownable.sol#L19
+
+# [L-5] Change function visibility to internal
+
+## Comment
+
+It is generally better to use internal visibility instead of external for functions that are only called within the same contract. 
+
+**Reduced gas costs**: External functions have to create a message call to be invoked, which incurs additional gas costs. Internal functions, on the other hand, can be called directly within the same contract, without the need for a message call, resulting in reduced gas costs.
+
+**Better security**: Using internal visibility for functions that are only called within the same contract can improve the security of the contract. This is because external functions are callable from outside the contract, which can create potential attack vectors if they are not properly secured.
+
+**Easier to reason about**: Using internal visibility can make the contract code easier to read and reason about, as it clearly indicates that the function is only used internally within the contract.
+
+**Consistency**: Using internal visibility for internal functions promotes consistency and best practices in coding style across different Solidity projects, as it is a widely accepted convention.
+
+## Instances
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L159
