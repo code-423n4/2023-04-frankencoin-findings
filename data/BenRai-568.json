@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "BenRai",
+  "risk": "3",
+  "title": "If a position is denied the collateral cannot be withdrawn until the expiration date",
+  "issueId": 568,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/568"
+}
