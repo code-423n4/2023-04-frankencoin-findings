@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "jasonxiale",
+  "risk": "2",
+  "title": "MintingHub.bid can be DOSed by front-run calling MintingHub.splitChallenge",
+  "issueId": 772,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/772"
+}
