@@ -56,7 +56,46 @@ If `address target` is set to `address(0)` erroneously, the proceeds could be se
 
 https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L279
 
-## 4. IN `Frankencoin.constructor` THE `_minApplicationPeriod` SHOULD BE CHECKED FOR `0` VALUE (INPUT VALIDATION).
+## 4.  ADDRESS `sender` SHOULD BE CHECKED FOR `address(0)` IN THE `equity.votes` FUNCTION.
+
+`Equity.votes(address, address[])` and `Equity.checkQualified()` are public functions. 
+Hence if `address(0)` is passed in as `sender` address to these functions, the `Equity.canVoteFor()` will always return `true` when `(owner == delegate)` is checked and both addresses are `address(0)`. 
+
+    function votes(address sender, address[] calldata helpers) public view returns (uint256) {
+        uint256 _votes = votes(sender);
+        for (uint i=0; i<helpers.length; i++){
+            address current = helpers[i];
+            require(current != sender);
+            require(canVoteFor(sender, current));
+			...
+			}
+	}
+
+    function canVoteFor(address delegate, address owner) internal view returns (bool) {
+        if (owner == delegate){
+            return true;
+        } else if (owner == address(0x0)){
+            return false;
+		}
+		...
+	}		
+
+Hence this will erroneously caclulate the votes inside the `Equity.votes()` function when the function actually should revert instead. - Equity.sol#L193 
+
+Current use case of this function is in `Equity.restructureCapTable()` which calls the `checkQualified()` function as below:
+
+            checkQualified(msg.sender, helpers);
+
+Since the msg.sender will not equal to `address(0)`, there is no direct threat. 
+But since these are public functions and future changes to the contract could use them for different logic implementations it is recommended to check for the `address(0)`
+
+Or else `if` and `else-if` should interchange in `Equity.canVoteFor()`, so that `address(0)` check will be performed prior to the `owner == delegate` check.
+Hence if `owner == address(0)` is checked first then the `Equity.canVoteFor()` will return `false` 
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L193
+https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L226-L229
+
+## 5. IN `Frankencoin.constructor` THE `_minApplicationPeriod` SHOULD BE CHECKED FOR `0` VALUE (INPUT VALIDATION).
 
 In `Frankencoin.constructor()` function, the immutable variable `MIN_APPLICATION_PERIOD` is set as follows:
 
@@ -68,13 +107,13 @@ _minApplicationPeriod should check for `0` value - It is assigned to an immutabl
 
 https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L59-L62
 
-## 5. CONSTANTS SHOULD BE DEFINED RATHER THAN USING MAGIC NUMBERS
+## 6. CONSTANTS SHOULD BE DEFINED RATHER THAN USING MAGIC NUMBERS
 
       return minterReserveE6 / 1000000;
 	  
 https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L118
 
-## 6. CORRECT THE TYPOS GIVEN BELOW 
+## 7. CORRECT THE TYPOS FOUND IN THE COMMENTS BELOW: 
 
 Here, `we are also save`, as 68 Bits would imply more than a trillion outstanding shares.
 
@@ -110,7 +149,7 @@ Should be changed to:
 	 
 https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MintingHub.sol#L109
 
-## 7. Use Explicit Variable Declarations FOR DATA TYPES.
+## 8. Use Explicit Variable Declarations FOR DATA TYPES.
     
 	use `uint256` instead of `uint`
 	
