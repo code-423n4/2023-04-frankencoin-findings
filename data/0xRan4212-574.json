@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xRan4212",
+  "risk": "3",
+  "title": "StableCoin bridge implicitly hardcode the source stablecoin value to 1 CHF",
+  "issueId": 574,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/574"
+}
