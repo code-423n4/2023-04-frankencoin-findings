@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "xmxanuel",
+  "risk": "2",
+  "title": "Permissions of Minter and Position contract are not clear defined in Frankencoin.sol",
+  "issueId": 676,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/676"
+}
