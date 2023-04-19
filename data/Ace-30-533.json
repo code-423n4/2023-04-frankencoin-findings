@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Ace-30",
+  "risk": "2",
+  "title": "a malicious actor can frontrun and split the challenge size to prevent other bidders from submitting higher bids",
+  "issueId": 533,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/533"
+}
