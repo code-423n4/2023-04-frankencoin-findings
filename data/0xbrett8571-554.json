@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xbrett8571",
+  "risk": "2",
+  "title": "Attacker can manipulate _mintingFeePPM, _reservePPM, and _liqPrice parameters to take advantage of the system.",
+  "issueId": 554,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/554"
+}
