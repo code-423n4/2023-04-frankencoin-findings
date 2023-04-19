@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Bnke0x0",
+  "risk": "2",
+  "title": "Position.sol accidentally inherits Ownable instead of Owner which removes an important safeguard without sponsor knowledge",
+  "issueId": 714,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/714"
+}
