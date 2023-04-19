@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "giovannidisiena",
+  "risk": "3",
+  "title": "[H-04] Share calculation breaks if equity reaches zero",
+  "issueId": 881,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/881"
+}
