@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "hasmama",
+  "risk": "3",
+  "title": " Malicious Contract Execution through _transfer() Function",
+  "issueId": 626,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/626"
+}
