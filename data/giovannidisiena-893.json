@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "giovannidisiena",
+  "risk": "2",
+  "title": "[M-03] Incorrect comparison in `Equity::calculateProceeds`",
+  "issueId": 893,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/893"
+}
