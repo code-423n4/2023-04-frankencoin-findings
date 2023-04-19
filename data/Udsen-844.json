@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Udsen",
+  "risk": "3",
+  "title": "DATA RETRIEVAL ERROR IN THE `for` LOOP OF THE `Equity.restructureCapTable()` FUNCTION",
+  "issueId": 844,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/844"
+}
