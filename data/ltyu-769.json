@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ltyu",
+  "risk": "2",
+  "title": "System Fees can cause minting Frankencoin to underflow",
+  "issueId": 769,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/769"
+}
