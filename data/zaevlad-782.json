@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "zaevlad",
+  "risk": "2",
+  "title": "Some Frankencoin token can be lost in Equity contract due to a redeem calculations",
+  "issueId": 782,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/782"
+}
