@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "giovannidisiena",
+  "risk": "3",
+  "title": "[H-05] A malicious minter can be suggested with zero application period and zero application fee if `Frankencoin::suggestMinter` is called immediately after deployment",
+  "issueId": 883,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/883"
+}
