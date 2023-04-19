@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Bauchibred",
+  "risk": "2",
+  "title": "Inconsistency in view functions can lead to trusted minters believing they're allowed to mint less arbitrary tokens than they are supposed to",
+  "issueId": 543,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/543"
+}
