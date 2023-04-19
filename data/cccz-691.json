@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "cccz",
+  "risk": "3",
+  "title": "When the challenge is successful, the user can send tokens to the position to avoid the position's cooldown period being extended",
+  "issueId": 691,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/691"
+}
