@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xmuxyz",
+  "risk": "2",
+  "title": "Due to lack of an input validation to check whether or not the `initPeriod` and `_duration` would be `0` within the Position#`constructor()`, a position will be expired soon just after the position owner open a new position. ",
+  "issueId": 524,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/524"
+}
