@@ -716,7 +716,31 @@ FILE: 2023-04-frankencoin/contracts/Position.sol
 
 ##
 
-## [NC-19] 
+## [NC-19] Use constants instead of using numbers directly without explanations 
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+122: return totalMint * (1000_000 - reserveContribution - calculateCurrentFee()) / 1000_000;
+124: return totalMint * (1000_000 - reserveContribution) / 1000_000;
+
+```
+[Position.sol#L122](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L122)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/MintingHub.sol
+
+189: return (challenge.bid * 1005) / 1000;
+217: uint256 earliestEnd = block.timestamp + 30 minutes;
+265: uint256 reward = (volume * CHALLENGER_REWARD) / 1000_000;
+
+```
+[MintingHub.sol#L189](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L189)
+
+```solidity
+FILE: 
+
+```
 
 
 
