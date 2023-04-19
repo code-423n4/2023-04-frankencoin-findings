@@ -162,4 +162,25 @@ In Position.sol, the [NatSpec comment](https://github.com/code-423n4/2023-04-fra
       minterReserveE6 += _amount * _reservePPM; // minter reserve must be kept accurately in order to ensure we can get back to exactly 0
    }
 ```
-As can be seen from the code block above, rest goes to equity as reserves or as fees only. It is not being routed through [`transferAndCall()`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/ERC20.sol#L162-L168) to invoke [`IERC677Receiver(recipient).onTokenTransfer(msg.sender, amount, data)`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L241-L255) for [minting](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L248) of `FPS`. Neither is `redeem()` called to [burn](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L278) any FPS when [`calculateAssignedReserve()`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L204-L213) or [`freedAmount - _amountExcludingReserve`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L254) is transferred back to the position owner.   
+As can be seen from the code block above, rest goes to equity as reserves or as fees only. It is not being routed through [`transferAndCall()`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/ERC20.sol#L162-L168) to invoke [`IERC677Receiver(recipient).onTokenTransfer(msg.sender, amount, data)`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L241-L255) for [minting](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L248) of `FPS`. Neither is `redeem()` called to [burn](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L278) any FPS when [`calculateAssignedReserve()`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L204-L213) or [`freedAmount - _amountExcludingReserve`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L254) is transferred back to the position owner.  
+
+## Correct placement of chf.transferFrom()
+Consider moving the critical `chf.transferFrom()` from `mint()` to `mintInternal()` just like it has been done so in `burnInternal()` just in case it can be bricked dodging the need to send in `CHF` when minting new `ZCHF`:
+
+[File: StablecoinBridge.sol#L44-L53](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/StablecoinBridge.sol#L44-L53)
+
+```diff
+    function mint(address target, uint256 amount) public {
+-        chf.transferFrom(msg.sender, address(this), amount);
+        mintInternal(target, amount);
+    }
+
+    function mintInternal(address target, uint256 amount) internal {
+        require(block.timestamp <= horizon, "expired");
+        require(chf.balanceOf(address(this)) <= limit, "limit");
++        chf.transferFrom(msg.sender, address(this), amount);
+        zchf.mint(target, amount);
+    }
+``` 
+## System pauser
+Consider implementing a system pauser on critical contracts particularly when it relates to Frankencoin.sol just in case it has been seriously compromised as far as the minting capabilities are of primary concern. 
