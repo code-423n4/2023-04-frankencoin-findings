@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ChainHunters",
+  "risk": "3",
+  "title": "Mistakes in minter settings during initial contract deployment",
+  "issueId": 608,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/608"
+}
