@@ -5,7 +5,7 @@
 | [G-03] | `unchecked` block can be implemented for `ERC20._mint` | 1 |  - |
 | [G-04] | `unchecked` block can be implemented for `ERC20._burn` | 1 |  - |
 | [G-05] | Unchecked blocks when there is previous checks can be implemented | 2 | - |
-| [G-06] | State variables can be packed in fewer storage slots | 2 |  2000 |
+| [G-06] | State variables can be packed in fewer storage slots | 2 |  4000 |
 | [G-07] | Use nested `if` statements to avoid multiple check combinations using `&&` | 4 | 24 |
 | [G-08] | `Ownable.onlyOwner()` modifier can be refactored | 1 | - |
 | [G-09] | Multiple address mappings can be combined into a single mapping of an address to a struct, where appropriate | 1 | - |
@@ -190,10 +190,28 @@ Gas savings applies to all functions that calls `Position.notifyRepaidInternal()
 38:    uint32 public immutable mintingFeePPM; /// @audit 4 bytes can be packed
 39:    uint32 public immutable reserveContribution; /// @audit 4 bytes can be packed
 ```
+[Equity.sol#L39-L51](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L39-L51)
+```solidity
+/Equity.sol
+
+39:    uint32 public constant VALUATION_FACTOR = 3;
+40:
+41:    uint256 private constant MINIMUM_EQUITY = 1000 * ONE_DEC18;
+42:
+43:    /**
+44:     * The quorum in basis points. 100 is 1%.
+45:     */
+46:    uint32 private constant QUORUM = 300;
+47:
+48:    /**
+49:     * The number of digits to store the average holding time of share tokens.
+50:     */
+51:   uint8 private constant BLOCK_TIME_RESOLUTION_BITS = 24;
+```
 
 
 Recommendation:
-Saves 1 slot (2000 gas)
+Saves 2 slots (4000 gas)
 ```solidity
 address public immutable original; // originals point to themselves, clone to their origin
 uint32 public immutable mintingFeePPM;
@@ -202,6 +220,21 @@ uint32 public immutable reserveContribution; // in ppm
 IFrankencoin public immutable zchf; // currency
 IERC20 public override immutable collateral; // collateral
 uint256 public override immutable minimumCollateral; // prevent dust amounts
+```
+```solidity
+uint32 public constant VALUATION_FACTOR = 3;
+
+/**
+    * The quorum in basis points. 100 is 1%.
+    */
+uint32 private constant QUORUM = 300;
+
+/**
+    * The number of digits to store the average holding time of share tokens.
+    */
+uint8 private constant BLOCK_TIME_RESOLUTION_BITS = 24;
+
+uint256 private constant MINIMUM_EQUITY = 1000 * ONE_DEC18;
 ```
 
 
@@ -270,3 +303,4 @@ Gas savings applies to all functions that uses the `onlyOwner()` modifier. For e
 ```
 
 Saves a storage slot for the mapping. Depending on the circumstances and sizes of types, can avoid a Gsset (20000 gas) per mapping combined. Reads and subsequent writes can also be cheaper when a function requires both values and they both fit in the same storage slot. 
+
