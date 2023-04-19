@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Proxy",
+  "risk": "2",
+  "title": "Function `createNewPosition` has no access contol",
+  "issueId": 598,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/598"
+}
