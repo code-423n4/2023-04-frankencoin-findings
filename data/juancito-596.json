@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "juancito",
+  "risk": "2",
+  "title": "Lack of validation in opening positions parameters can lead to critical vulnerabilities at protocol level",
+  "issueId": 596,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/596"
+}
