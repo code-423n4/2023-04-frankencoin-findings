@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "cccz",
+  "risk": "2",
+  "title": "When challengePeriod == 0, no bid can be made on the challenge of the position",
+  "issueId": 621,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/621"
+}
