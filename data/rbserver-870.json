@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "rbserver",
+  "risk": "2",
+  "title": "`Frankencoin.suggestMinter` function can be called to add malicious minter",
+  "issueId": 870,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/870"
+}
