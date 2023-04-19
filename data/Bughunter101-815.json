@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Bughunter101",
+  "risk": "3",
+  "title": "The minter can steal the Frankencoin in notifyLoss()",
+  "issueId": 815,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/815"
+}
