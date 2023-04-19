@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "peakbolt",
+  "risk": "3",
+  "title": "restructureCapTable() only burn balance of the first addressesToWipe[], causing FPS holders who are restructuring Frankencoin to lose a portion of their shares",
+  "issueId": 564,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/564"
+}
