@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "BenRai",
+  "risk": "3",
+  "title": "There is no check what % of the ZCHF coin is backed by one particular collateral and this can lead to a cluster risk",
+  "issueId": 565,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/565"
+}
