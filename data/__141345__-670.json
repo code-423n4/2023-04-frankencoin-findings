@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "__141345__",
+  "risk": "3",
+  "title": "transfer position ownership to `addr(0)` to DoS `end()` challenge",
+  "issueId": 670,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/670"
+}
