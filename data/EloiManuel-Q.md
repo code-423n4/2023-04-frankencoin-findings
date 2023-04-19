@@ -60,6 +60,12 @@ contracts/Position.sol
 ``` 
 
 ```solidity
+contracts/Equity.sol
+
+276: require(canRedeem(msg.sender));
+```
+
+```solidity
 contracts/StablecoinBridge.sol
 
 51:    require(block.timestamp <= horizon, "expired");
