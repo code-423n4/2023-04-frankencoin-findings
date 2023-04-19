@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xbrett8571",
+  "risk": "3",
+  "title": "`_mulD18` and `_divD18` functions can be manipulated with  Integer overflow/underflow.",
+  "issueId": 558,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/558"
+}
