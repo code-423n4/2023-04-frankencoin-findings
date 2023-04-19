@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "SaharDevep",
+  "risk": "3",
+  "title": "Positions can be registered without providing enough collateral",
+  "issueId": 601,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/601"
+}
