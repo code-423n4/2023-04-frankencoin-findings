@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "V_B",
+  "risk": "2",
+  "title": "`createNewPosition`/`clonePosition`/`createClone` are suspicious of the reorg attack",
+  "issueId": 985,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/985"
+}
