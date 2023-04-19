@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Kumpa",
+  "risk": "2",
+  "title": "The challenger could restrict the minting function of the position forever by repeating ```launchChallenge```  and ```bid``` to end the challenge.",
+  "issueId": 806,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/806"
+}
