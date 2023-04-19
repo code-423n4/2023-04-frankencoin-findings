@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Norah",
+  "risk": "2",
+  "title": "when vetoed, Owner wont be able to withdraw his collateral or mint until expiration time",
+  "issueId": 732,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/732"
+}
