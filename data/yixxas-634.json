@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "yixxas",
+  "risk": "3",
+  "title": "ERC777 tokens used as collateral can reenter and steal from contract by a successful challenger",
+  "issueId": 634,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/634"
+}
