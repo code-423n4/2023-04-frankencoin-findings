@@ -1,3 +1,9 @@
+# Move check that might revert using a function from another contract to the top of the function 
+
+The function `launchChallenge()` in the file MintingHub.sol checks in line 145 with the function `notifyChallengeStarted()` if the amount the user is challenging is equal or bigger the `minimumCollateral` of the position. By moving this check from line 145 below line 141 will save the user gas in case he accidentally challenged a position that is smaller than the `minimumCollateral`.
+File: contracts/MintingHub.sol
+145: `position.notifyChallengeStarted(_collateralAmount);`
+
 # Use calldata instead of storage to save gas 
 Using calldata for arrays needs less gas than using memory.
 
