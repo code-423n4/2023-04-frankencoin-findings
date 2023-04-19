@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "R2",
+  "risk": "2",
+  "title": "`StablecoinBridge` DOS by minting large amount of ZCHF",
+  "issueId": 617,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/617"
+}
