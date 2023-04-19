@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Proxy",
+  "risk": "2",
+  "title": "Reorg attack on position creation can be used to steal funds",
+  "issueId": 591,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/591"
+}
