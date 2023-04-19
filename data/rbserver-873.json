@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "rbserver",
+  "risk": "2",
+  "title": "Malicious voting helper can cause `Equity.canVoteFor` function to be executed in an infinite loop",
+  "issueId": 873,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/873"
+}
