@@ -62,3 +62,51 @@ Use custom errors instead of these inline string errors.
         require(chf.balanceOf(address(this)) <= limit, "limit");
 ```
 
+- https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L242
+```solidity
+        require(msg.sender == address(zchf), "caller must be zchf");
+```
+
+- https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L253
+```solidity
+        require(totalSupply() < 2**128, "total supply exceeded");
+```
+
+- https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L293
+```solidity
+        require(shares + ONE_DEC18 < totalShares, "too many shares"); // make sure there is always at least one share
+```
+
+# ```x += y``` costs more gas than ```x = x + y``` for state variables
+- https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L169
+```solidity
+      minterReserveE6 += _amount * _reservePPM; // minter reserve must be kept accurately in order to ensure we can get back to exactly 
+```
+
+- https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L196
+```solidity
+      minterReserveE6 -= amount * reservePPM;
+```
+
+- https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L227
+```solidity
+      minterReserveE6 -= targetTotalBurnAmount * _reservePPM; // reduce reserve requirements by original ratio
+```
+
+- https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L253
+```solidity
+      minterReserveE6 -= freedAmount * _reservePPM; // reduce reserve requirements by original ratio
+```
+
+# Use solidity version 0.8.19 to gain some gas boost
+This announcement https://blog.soliditylang.org/2023/02/22/solidity-0.8.19-release-announcement/ suggest that using latest version of solidity compiler could give some gas usage advantages.
+- https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L4
+```solidity
+pragma solidity >=0.8.0 <0.9.0;
+```
+and for other contracts in the project, it is:
+
+```solidity
+pragma solidity >=0.8.0 <0.9.0;
+```
+
