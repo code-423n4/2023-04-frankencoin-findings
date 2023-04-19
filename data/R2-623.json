@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "R2",
+  "risk": "2",
+  "title": "Non-standard ERC-20 tokens and tokens with fee can't be used as collateral",
+  "issueId": 623,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/623"
+}
