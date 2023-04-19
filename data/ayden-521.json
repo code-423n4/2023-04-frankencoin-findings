@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ayden",
+  "risk": "3",
+  "title": "Before the total supply exceeds 0, anyone can register as a minter with no application period or fee and those register address can't been denyed because it's too late.",
+  "issueId": 521,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/521"
+}
