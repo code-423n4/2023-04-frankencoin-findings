@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "juancito",
+  "risk": "2",
+  "title": "Positions with low `minimumCollateral` can suffer from frontrunning attacks on challenges",
+  "issueId": 586,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/586"
+}
