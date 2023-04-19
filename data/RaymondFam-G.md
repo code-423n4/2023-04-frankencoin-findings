@@ -26,6 +26,14 @@ Here are some of the instances entailed:
 
 284:        IERC20(collateral).transfer(target, amount);
 ```
+## Unneeded check
+In the constructor of Position.sol, `initPeriod` has been hard coded as 7 days in `openPosition()` of MintingHub.sol, making the following check unnecessary:
+
+[File: Position.sol#L53](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Position.sol#L53)  
+
+```diff
+-        require(initPeriod >= 3 days); // must be at least three days, recommended to use higher values
+```
 ## State Variables Repeatedly Read Should be Cached
 SLOADs cost 100 gas each after the 1st one whereas MLOADs/MSTOREs only incur 3 gas each. As such, storage values read multiple times should be cached in the stack memory the first time (costing only 1 SLOAD) and then re-read from this cache to avoid multiple SLOADs.
 
