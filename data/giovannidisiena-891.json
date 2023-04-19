@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "giovannidisiena",
+  "risk": "2",
+  "title": "[M-02] `Equity::price` will revert if `totalSupply` is zero",
+  "issueId": 891,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/891"
+}
