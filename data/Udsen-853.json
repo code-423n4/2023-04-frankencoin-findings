@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Udsen",
+  "risk": "3",
+  "title": "A MINTER CAN STOP A QUALIFIED POOL SHARE HOLDER FROM `DENYING THE MINTER` DURING THE APPLICATION PERIOD BY FRONT-RUNNING THE TRANSACTION",
+  "issueId": 853,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/853"
+}
