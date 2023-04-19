@@ -148,6 +148,67 @@ constructor(uint256 _minApplicationPeriod) ERC20(18){
 ```
 [Frankencoin.sol#L59-L62](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L59-L62)
 
+```solidity
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+constructor(address _owner, address _hub, address _zchf, address _collateral, 
+        uint256 _minCollateral, uint256 _initialLimit, uint256 initPeriod, uint256 _duration,
+        uint256 _challengePeriod, uint32 _mintingFeePPM, uint256 _liqPrice, uint32 _reservePPM) {
+        require(initPeriod >= 3 days); // must be at least three days, recommended to use higher values
+        setOwner(_owner);
+        original = address(this);
+        hub = _hub;
+        price = _liqPrice;
+        zchf = IFrankencoin(_zchf);
+        collateral = IERC20(_collateral);
+        mintingFeePPM = _mintingFeePPM;
+        reserveContribution = _reservePPM;
+        minimumCollateral = _minCollateral;
+        challengePeriod = _challengePeriod;
+        start = block.timestamp + initPeriod; // one week time to deny the position
+        cooldown = start;
+        expiration = start + _duration;
+        limit = _initialLimit;
+        
+        emit PositionOpened(_owner, original, _zchf, address(collateral), _liqPrice);
+    }
+
+```
+[Position.sol#L50-L70](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L50-L70)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/MintingHub.sol
+
+constructor(address _zchf, address factory) {
+        zchf = IFrankencoin(_zchf);
+        POSITION_FACTORY = IPositionFactory(factory);
+    }
+
+```
+[MintingHub.sol#L54-L57](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L54-L57)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Equity.sol
+
+ constructor(Frankencoin zchf_) ERC20(18) {
+        zchf = zchf_;
+    }
+
+```
+[Equity.sol#L93-L95](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L93-L95)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/StablecoinBridge.sol
+
+constructor(address other, address zchfAddress, uint256 limit_){
+        chf = IERC20(other);
+        zchf = IFrankencoin(zchfAddress);
+        horizon = block.timestamp + 52 weeks;
+        limit = limit_;
+    }
+
+```
+[StablecoinBridge.sol#L26-L31](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/StablecoinBridge.sol#L26-L31)
 
 ##
 
@@ -172,7 +233,13 @@ FILE: FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
 [Frankencoin.sol#L84-L85](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L84-L85)
 
 ```solidity
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+294:  if (size < minimumCollateral && size < collateralBalance()) revert ChallengeTooSmall();
+
 ```
+[Position.sol#L294](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L294)
+
 ##
 
 ## [G-7] No need to evaluate all expressions to know if one of them is true
@@ -186,18 +253,6 @@ FILE: FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
 ```
 [Frankencoin.sol#L106](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L106)
 
-```solidity
-```
-```solidity
-```
-```solidity
-```
-```solidity
-```
-```solidity
-```
-```solidity
-```
 ##
 
 ## [G-8] Repeated functions should be cached instead of multiple calls to save gas 
@@ -226,16 +281,7 @@ function adjustTotalVotes(address from, uint256 amount, uint256 roundingLoss) in
         totalVotesAnchorTime = anchorTime();
     }
 ```
-```solidity
-```
-```solidity
-```
-```solidity
-```
-```solidity
-```
-```solidity
-```
+[Equity.sol#L144-L148](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L144-L148)
 
 ##
 
