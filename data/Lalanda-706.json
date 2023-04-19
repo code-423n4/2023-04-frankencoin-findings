@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Lalanda",
+  "risk": "2",
+  "title": "Restructuring of the system will only burn the balance of first address provided in addressesToWipe array",
+  "issueId": 706,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/706"
+}
