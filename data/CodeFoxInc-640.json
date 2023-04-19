@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "CodeFoxInc",
+  "risk": "2",
+  "title": "Unbounded loop can cause unexpected behavior ",
+  "issueId": 640,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/640"
+}
