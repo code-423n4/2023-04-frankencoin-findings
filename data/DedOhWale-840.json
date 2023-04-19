@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "DedOhWale",
+  "risk": "3",
+  "title": "A user may interact with a Positions contract which has already had its `cooldown` set to `expired`.",
+  "issueId": 840,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/840"
+}
