@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "peanuts",
+  "risk": "2",
+  "title": "Position owner can bypass challenge time by setting _challengPeriod to 0",
+  "issueId": 664,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/664"
+}
