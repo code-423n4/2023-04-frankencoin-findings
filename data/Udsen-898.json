@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Udsen",
+  "risk": "2",
+  "title": " `_reservePPM` DURING MINT OF `ZCHF` TOKENS IS NOT CHECKED FOR EQUALITY AGAINST THE `_reservePPM`  DURING BURN OF THE `ZCHF` TOKENS",
+  "issueId": 898,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/898"
+}
