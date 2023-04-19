@@ -22,6 +22,8 @@
 
 • [LOW-10] ERC-777 tokens can lead to re-entrancy vulnerabilities
 
+• [LOW-11] Challenges can be split after they end
+
 ### [LOW-1] Frontrunning suggestMinter may lead to stolen funds
 
 `Frankencoin::suggestMinter` does not validate `_applicationPeriod` and `_applicationFee` when `totalSupply()` is `0`
@@ -273,6 +275,41 @@ The re-entrancy can be executed by calling the function with a value big enough 
 Add re-entrancy guards to functions that transfer collateral, and implement the Checks-Effects-Interaction pattern. Or disallow the use of ERC-777 tokens as collateral.
 
 [Link to code](https://github.com/Frankencoin-ZCHF/FrankenCoin/blob/main/contracts/MintingHub.sol#L88-L113)
+
+### [LOW-11] Challenges can be split after they end
+
+#### Impact
+
+Griefing users by diving their already ended challenges
+
+#### Proof of Concept
+
+```solidity
+function testBidAfterEnd() public {
+    Position position = Position(initPosition());
+
+    skip(7 * 86_400 + 60);
+
+    User challenger = new User(zchf);
+    col.mint(address(challenger), 1001);
+    uint256 challengeNumber = challenger.challenge(hub, address(position), 1001);
+
+    uint256 bidAmount = 1 ether;
+    bob.obtainFrankencoins(swap, 1 ether);
+    bob.bid(hub, challengeNumber, bidAmount);
+
+    skip(7 * 86_400 + 60);
+
+    vm.startPrank(address(alice));
+    hub.splitChallenge(challengeNumber, 500); // @audit
+    hub.end(challengeNumber); // @audit
+    vm.stopPrank();
+}
+```
+
+#### Recommended Mitigation Steps
+
+Add `if (block.timestamp >= challenge.end) revert TooLate();` to the `splitChallenge` function
 
 ## Non Critical Issues
 
