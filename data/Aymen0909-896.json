@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Aymen0909",
+  "risk": "2",
+  "title": "Error in `restructureCapTable` function leads to burning only first address",
+  "issueId": 896,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/896"
+}
