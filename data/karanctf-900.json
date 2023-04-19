@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "karanctf",
+  "risk": "2",
+  "title": "Off by on error on calculateProceeds function leads to lock 2 shares instead of 1 as described in docs",
+  "issueId": 900,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/900"
+}
