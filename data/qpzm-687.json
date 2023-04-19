@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "qpzm",
+  "risk": "3",
+  "title": "`MintingHub.bid` is vulnerable to reentrancy attack and gives free challenge reward if the collateral is ERC777.",
+  "issueId": 687,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/687"
+}
