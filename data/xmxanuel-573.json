@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "xmxanuel",
+  "risk": "3",
+  "title": "Bidder collateral payout can be prevented with a splitChallenge frontrunning before the MintingHub.end transaction",
+  "issueId": 573,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/573"
+}
