@@ -1,0 +1,2 @@
+### GAS-1 MintingHub_#109_Check arguments first 
+There is the check of the `openPosition` function arguments in the line [#109](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L109), which can be easily moved in the beginning of the function body. It will save some gas for users in case of `revert`.
