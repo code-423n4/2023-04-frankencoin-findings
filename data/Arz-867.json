@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Arz",
+  "risk": "3",
+  "title": "FPS tokens(Equity Shares) can be minted through transferAndCall by transferring zero tokens.",
+  "issueId": 867,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/867"
+}
