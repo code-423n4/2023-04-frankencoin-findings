@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "V_B",
+  "risk": "2",
+  "title": "`launchChallenge`/`bid` are suspicious of the reorg attack",
+  "issueId": 966,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/966"
+}
