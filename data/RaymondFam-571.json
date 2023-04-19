@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "RaymondFam",
+  "risk": "2",
+  "title": "A qualified FPS holder could call restructureCapTable() to maliciously wipe all other holders",
+  "issueId": 571,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/571"
+}
