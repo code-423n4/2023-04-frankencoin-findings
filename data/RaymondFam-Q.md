@@ -1,5 +1,7 @@
-## Inadequate calculateFreedAmount()
-Users will have to separately figure out on their own what exact `amountExcludingReserve` is needed in order to fully repay their loans when [`currentReserve < minterReserve_`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L238). Consider refactoring `calculateFreedAmount()` that will take in another parameter, i.e. the intended [`freedAmount`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L252) and correspondingly returns an additional variable, i.e, the required `_amountExcludingReserve`.
+## Inadequate calculateFreedAmount() and calculateAssignedReserve()
+In `Frankencoin.calculateFreedAmount()`, users will have to separately figure out on their own what exact `amountExcludingReserve` is needed in order to fully repay their loans via [`burnWithReserve()`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L251-L257) when [`currentReserve < minterReserve_`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L238). Consider refactoring `calculateFreedAmount()` that will take in another parameter, i.e. the intended [`freedAmount`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L252) and correspondingly returns an additional variable, i.e, the required `_amountExcludingReserve`.
+
+The same refactor consideration should also be given to `Frankencoin.calculateAssignedReserve()` so owner will know what additional `ZCHF`, i.e the loss, she will need to have in her wallet prior to calling [`burnFrom()`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L223-L229).  
 
 ## Chain reorganization attack
 As denoted in the [Moralis academy article](https://academy.moralis.io/blog/what-is-chain-reorganization):
