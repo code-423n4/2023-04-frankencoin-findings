@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ChainHunters",
+  "risk": "3",
+  "title": "Lack of condition in the delegateVoteTo() check can lead to DoS and gas damage.",
+  "issueId": 611,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/611"
+}
