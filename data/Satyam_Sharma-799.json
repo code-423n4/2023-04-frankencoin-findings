@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Satyam_Sharma",
+  "risk": "2",
+  "title": "variable should be used instead of using hardedcoded address index to wipeout",
+  "issueId": 799,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/799"
+}
