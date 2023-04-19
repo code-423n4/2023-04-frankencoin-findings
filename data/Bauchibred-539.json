@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Bauchibred",
+  "risk": "2",
+  "title": "Attackers can use the \"average\" logic attached to `MIN_HOLDING_DURATION` to game/destruct the system",
+  "issueId": 539,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/539"
+}
