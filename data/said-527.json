@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "said",
+  "risk": "2",
+  "title": "`initPeriod` when creating open position can be less 7 days",
+  "issueId": 527,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/527"
+}
