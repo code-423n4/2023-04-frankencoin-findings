@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "bin2chen",
+  "risk": "2",
+  "title": "position.withdraw() Cannot prevent Multiple Token Addresses",
+  "issueId": 677,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/677"
+}
