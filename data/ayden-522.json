@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ayden",
+  "risk": "3",
+  "title": "If the depth of recursion is not set, the code may fall into an infinite loop and eventually incur out of gas fees  ",
+  "issueId": 522,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/522"
+}
