@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "qpzm",
+  "risk": "2",
+  "title": "`MIN_HOLDING_DURATION` is not 90 days as commented in `Equity.sol`",
+  "issueId": 695,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/695"
+}
