@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "BPZ",
+  "risk": "2",
+  "title": "# Not burning tokens from the all the address in a array due to hardcoded value",
+  "issueId": 730,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/730"
+}
