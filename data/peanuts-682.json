@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "peanuts",
+  "risk": "2",
+  "title": "Position can escape challenges and deposits by opening Position directly through PositionFactory",
+  "issueId": 682,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/682"
+}
