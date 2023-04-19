@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "SaharDevep",
+  "risk": "3",
+  "title": "The attacker can mint infinite amount of tokens",
+  "issueId": 604,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/604"
+}
