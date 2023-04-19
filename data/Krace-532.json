@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Krace",
+  "risk": "2",
+  "title": "Transfer ZCHF to zchf.reserver but get no shares due to loss of precision, causing funds lost",
+  "issueId": 532,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/532"
+}
