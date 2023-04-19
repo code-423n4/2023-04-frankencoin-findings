@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xPkhatri",
+  "risk": "2",
+  "title": "checkQualified function DOS because of sufficient large helpers array",
+  "issueId": 654,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/654"
+}
