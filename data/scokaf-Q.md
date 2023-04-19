@@ -42,3 +42,46 @@ https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Ownable.so
 ## Tools Used
 
 Manual Analysis
+
+
+# 2: WORD & TYPING TYPOS
+
+Vulnerability details
+
+## Context:
+
+Word & typing typos
+
+## Proof of Concept
+
+> ***File: Frankencoin.sol*** 
+
+arbitraty can be changed to arbitrary in the following comment.
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L100
+
+
+elses can be changed to else in the following comment.
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L260
+
+
+> ***File: Frankencoin.sol*** 
+
+creterion can be changed to criterion in the following comment.
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L358
+
+
+> ***File: Equity.sol*** 
+
+proporational can be changed to proportional in the following comment.
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L34
+
+
+## Tools Used
+
+Manual Analysis
+
+
