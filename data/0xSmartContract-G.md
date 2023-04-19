@@ -9,7 +9,7 @@
 | [G-06] |Avoid contract existence checks by using solidity version 0.8.10 or later | 36 |
 | [G-07] |if () / require() statements that check input arguments should be at the top of the function| 1 |
 | [G-08] | Use nested if and, avoid multiple check combinations| 3 |
-| [G-09] | Ternary operation is cheaper than if-else statement |1 |
+| [G-09] | Ternary operation is cheaper than if-else statement | 2 |
 | [G-10] |Upgrade Solidity's optimizer |  |
 
 Total 10 issues
@@ -592,7 +592,7 @@ https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Position.s
 
 There are instances where a ternary operation can be used instead of if-else statement. In these cases, using ternary operation will save modest amounts of gas.
 
-1 result - 1 file:
+2 results - 1 files:
 ```solidity
 contracts\Frankencoin.sol:
 
@@ -625,6 +625,32 @@ contracts\Frankencoin.sol:
   146:     }
 
 ```
+https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Position.sol#L120-L126
+
+```solidity
+contracts\Position.sol:
+
+  120:     function getUsableMint(uint256 totalMint, bool afterFees) public view returns (uint256){
+  121:         if (afterFees){
+  122:             return totalMint * (1000_000 - reserveContribution - calculateCurrentFee()) / 1000_000;
+  123:         } else {
+  124:             return totalMint * (1000_000 - reserveContribution) / 1000_000;
+  125:         }
+  126:     }
+
+```
+
+```diff
+contracts\Position.sol:
+
+  120:     function getUsableMint(uint256 totalMint, bool afterFees) public view returns (uint256){
+- 121:         if (afterFees){
+- 122:             return totalMint * (1000_000 - reserveContribution - calculateCurrentFee()) / 1000_000;
+- 123:         } else {
+- 124:             return totalMint * (1000_000 - reserveContribution) / 1000_000;
+- 125:         }
++              return afterFees ? totalMint * (1000_000 - reserveContribution - calculateCurrentFee()) / 1000_000 : totalMint * (1000_000 - reserveContribution) / 1000_000;
+  126:     }
 
 ### [G-10] Upgrade Solidity's optimizer
 
