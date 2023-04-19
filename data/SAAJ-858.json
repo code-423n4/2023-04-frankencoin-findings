@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "SAAJ",
+  "risk": "2",
+  "title": "Calendar calculations using time suffix results in loss of time precision ",
+  "issueId": 858,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/858"
+}
