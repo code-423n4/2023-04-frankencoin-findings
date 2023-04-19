@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "rbserver",
+  "risk": "2",
+  "title": "User can frontrun opened position's owner's `Position.mint` transaction by calling `Position.reduceLimitForClone` function to reduce opened position's limit to 0",
+  "issueId": 876,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/876"
+}
