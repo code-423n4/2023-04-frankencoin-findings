@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "koxuan",
+  "risk": "2",
+  "title": "tryAvertChallenge in Position assumes collateralAmount is 18 decimal, causing challenge that has collateral with small decimals to always be easily averted",
+  "issueId": 525,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/525"
+}
