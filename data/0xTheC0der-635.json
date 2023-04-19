@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xTheC0der",
+  "risk": "2",
+  "title": "Denial of service in `checkQualified()` method of `Equity` contract",
+  "issueId": 635,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/635"
+}
