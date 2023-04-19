@@ -34,6 +34,16 @@ In the constructor of Position.sol, `initPeriod` has been hard coded as 7 days i
 ```diff
 -        require(initPeriod >= 3 days); // must be at least three days, recommended to use higher values
 ```
+## Unneeded function
+In MintingHub.sol, the following end function may be removed since users can always input `false` if need be in the other end function. It is not very much a convenient function since users would still need to input `_challengeNumber` instead of just clicking and go style:
+
+[File: MintingHub.sol#L235-L237](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MintingHub.sol#L235-L237) 
+
+```diff
+-    function end(uint256 _challengeNumber) external {
+-        end(_challengeNumber, false);
+-    }
+``` 
 ## State Variables Repeatedly Read Should be Cached
 SLOADs cost 100 gas each after the 1st one whereas MLOADs/MSTOREs only incur 3 gas each. As such, storage values read multiple times should be cached in the stack memory the first time (costing only 1 SLOAD) and then re-read from this cache to avoid multiple SLOADs.
 
