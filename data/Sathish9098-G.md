@@ -4,6 +4,10 @@
 
 ## [G-1] State variables should be cached in stack variables rather than re-reading them from storage
 
+> Instances(2) 
+
+> Approximate gas saved: 500 gas
+
 Caching will replace each Gwarmaccess (100 gas) with a much cheaper stack read.
 Less obvious fixes/optimizations include having local storage variables of mappings within state variable mappings or mappings within state variable structs, having local storage variables of structs within mappings, having local memory caches of state variable structs, or having local caches of state variable contracts/addresses.
 
@@ -37,6 +41,10 @@ minted state variable should be cached with stack variable
 
 ## [G-2] Using storage instead of memory for structs/arrays saves gas
 
+> Instances(2]1) 
+
+> Approximate gas saved: 2100 gas
+
 When fetching data from a storage location, assigning the data to a memory variable causes all fields of the struct/array to be read from storage, which incurs a Gcoldsload (2100 gas) for each field of the struct/array. If the fields are read from the new memory variable, they incur an additional MLOAD rather than a cheap stack read. Instead of declearing the variable with the memory keyword, declaring the variable with the storage keyword and caching any fields that need to be re-read in stack variables, will be much cheaper, only incuring the Gcoldsload for the fields actually read. The only time it makes sense to read the whole struct/array into a memory variable, is if the full struct/array is being returned by the function, is being passed to a function that requires memory, or if the array/struct is being read from another memory array/struct
 
 ```solidity
@@ -50,7 +58,7 @@ FILE: 2023-04-frankencoin/contracts/MintingHub.sol
 
 ## [G-3] For events use 3 indexed rule to save gas 
 
-> Instances()
+> Instances(12)
 
 Need to declare 3 indexed fields for event parameters. If the event parameter is less than 3 should declare all event parameters indexed 
 
@@ -98,6 +106,8 @@ FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
 
 ## [G-4] Multiple address/ID mappings can be combined into a single mapping of an address/ID to a struct, where appropriate
 
+> Instances(6) 
+
 Saves a storage slot for the mapping. Depending on the circumstances and sizes of types, can avoid a Gsset (20000 gas) per mapping combined. Reads and subsequent writes can also be cheaper when a function requires both values and they both fit in the same storage slot. Finally, if both fields are accessed in the same function, can save ~42 gas per access due to [not having to recalculate the key’s keccak256 hash](https://gist.github.com/IllIllI000/ec23a57daa30a8f8ca8b9681c8ccefb0) (Gkeccak256 - 30 gas) and that calculation’s associated stack operations.
 
 ```solidity
@@ -130,6 +140,8 @@ FILE: 2023-04-frankencoin/contracts/ERC20.sol
 ##
 
 ## [G-5] Lack of input value checks cause a redeployment if any human/accidental errors
+
+> Instances(24) 
 
 Devoid of sanity/threshold/limit checks, critical parameters can be configured to invalid values, causing a variety of issues and breaking expected interactions within/between contracts. Consider adding proper uint256 validation. A worst case scenario would render the contract needing to be re-deployed in the event of human/accidental errors that involve value assignments to immutable variables.
 
@@ -214,9 +226,9 @@ constructor(address other, address zchfAddress, uint256 limit_){
 
 ## [G-6] Use nested if and, avoid multiple check combinations
 
-> Instances()
+> Instances(4)
 
-> Approximate Gas Saved ( )
+> Approximate Gas Saved: 36 gas 
 
 Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports.
 
@@ -244,6 +256,8 @@ FILE: 2023-04-frankencoin/contracts/Position.sol
 
 ## [G-7] No need to evaluate all expressions to know if one of them is true
 
+> Instances(1) 
+
 When we have a code expressionA || expressionB if expressionA is true then expressionB will not be evaluated and gas saved
 
 ```solidity
@@ -255,7 +269,9 @@ FILE: FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
 
 ##
 
-## [G-8] Repeated functions should be cached instead of multiple calls to save gas 
+## [G-8] The result of function calls should be cached rather than re-calling the function 
+
+> Instances(2) 
 
 In Solidity, caching repeated function calls can be an effective way to optimize gas usage, especially when the function is called frequently with the same arguments
 
@@ -286,6 +302,8 @@ function adjustTotalVotes(address from, uint256 amount, uint256 roundingLoss) in
 ##
 
 ## [G-9] Amounts should be checked for 0 before calling a transfer
+
+> Instances(10) 
 
 Checking non-zero transfer values can avoid an expensive external call and save gas.
 While this is done at some places, it’s not consistently done in the solution.
@@ -321,15 +339,17 @@ FILE: 2023-04-frankencoin/contracts/MintingHub.sol
 
 ## [G-10] Don't declare the variable inside the loops 
 
+> Instances(2) 
+
 In every iterations the new variables instance created this will consumes more gas . So just declare variables outside the loop and only use inside to save gas 
 
 ```solidity
 FILE: 2023-04-frankencoin/contracts/Equity.sol
 
-for (uint i=0; i<helpers.length; i++){
+192: for (uint i=0; i<helpers.length; i++){
             address current = helpers[i];
 
-for (uint256 i = 0; i<addressesToWipe.length; i++){
+312: for (uint256 i = 0; i<addressesToWipe.length; i++){
             address current = addressesToWipe[0];
 
 ``` 
@@ -338,6 +358,8 @@ for (uint256 i = 0; i<addressesToWipe.length; i++){
 ##
 
 ## [G-11] Empty blocks should be removed to save deployment cost 
+
+> Instances(1) 
 
 ```solidity
 
@@ -352,6 +374,8 @@ FILE: ERC20.sol
 ##
 
 ## [G-12] Functions should be used instead of modifiers to save gas 
+
+> Instances(3) 
 
 ```solidity
 FILE: 2023-04-frankencoin/contracts/Position.sol
@@ -380,6 +404,10 @@ modifier noCooldown() {
 
 ## [G-13] Avoid contract existence checks by using low level calls
 
+> Instances(5) 
+
+> Approximate gas saved: 500 gas
+
 Prior to 0.8.10 the compiler inserted extra code, including EXTCODESIZE (100 gas), to check for contract existence for external function calls. In more recent solidity versions, the compiler will not insert these checks if the external call has a return value. Similar behavior can be achieved in earlier versions by using low-level calls, since low level calls never check for contract existence
 
 ```solidity
@@ -398,6 +426,8 @@ FILE: 2023-04-frankencoin/contracts/Equity.sol
 
 ## [G-14] Sort Solidity operations using short-circuit mode
 
+> Instances(3) 
+
 Short-circuiting is a solidity contract development model that uses OR/AND logic to sequence different cost operations. It puts low gas cost operations in the front and high gas cost operations in the back, so that if the front is low If the cost operation is feasible, you can skip (short-circuit) the subsequent high-cost Ethereum virtual machine operation.
 
 ```
@@ -411,42 +441,204 @@ f(x) && g(y)
 ```
 
 ```solidity
+FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
+
+84:   if (_applicationPeriod < MIN_APPLICATION_PERIOD && totalSupply() > 0) revert PeriodTooShort();
+85:   if (_applicationFee < MIN_FEE  && totalSupply() > 0) revert FeeTooLow();
+267:  if (!isMinter(msg.sender) && !isMinter(positions[msg.sender])) revert NotMinter();
+
+```
+[Frankencoin.sol#L84-L85](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L84-L85)
+
+##
+
+## [G-15] Use assembly to check for address(0)
+
+> Instances(3) 
+
+Saves 6 gas per instance
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/ERC20.sol
+
+152: require(recipient != address(0));
+180: require(recipient != address(0));
+
+```
+[ERC20.sol#L152](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20.sol#L152)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/ERC20PermitLight.sol
+
+56: require(recoveredAddress != address(0) && recoveredAddress == owner, "INVALID_SIGNER");
+
+```
+[ERC20PermitLight.sol#L56](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20PermitLight.sol#L56)
+
+##
+
+## [G-16] Shorthand way to write if / else statement can reduce the deployment cost 
+
+> Instances(7) 
+
+The normal if / else statement can be refactored in a shorthand way to write it:
+
+Increases readability
+Shortens the overall SLOC
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+184: if (time >= exp){
+            return 0;
+        } else {
+            return uint32(mintingFeePPM - mintingFeePPM * (time - start) / (exp - start));
+        }
+
+160: if (newPrice > price) {
+            restrictMinting(3 days);
+        } else {
+            checkCollateral(collateralBalance(), newPrice);
+        }
+
+121: if (afterFees){
+            return totalMint * (1000_000 - reserveContribution - calculateCurrentFee()) / 1000_000;
+        } else {
+            return totalMint * (1000_000 - reserveContribution) / 1000_000;
+        }
+
+250: if (token == address(collateral)){
+            withdrawCollateral(target, amount);
+        } else {
+            IERC20(token).transfer(target, amount);
+        }
+
+```
+[Position.sol#L184-L188](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L184-L188)
+
+```solidity
 FILE: 2023-04-frankencoin/contracts/MintingHub.sol
 
+267: if (effectiveBid > fundsNeeded){
+            zchf.transfer(owner, effectiveBid - fundsNeeded);
+        } else if (effectiveBid < fundsNeeded){
+            zchf.notifyLoss(fundsNeeded - effectiveBid); // ensure we have enough to pay everything
+        }
+```
+[MintingHub.sol#L267-L271](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MintingHub.sol#L267-L271)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
+
+141: if (balance <= minReserve){
+        return 0;
+      } else {
+        return balance - minReserve;
+      }
+
+207: if (currentReserve < minterReserve()){
+         // not enough reserves, owner has to take a loss
+         return theoreticalReserve * currentReserve / minterReserve();
+      } else {
+         return theoreticalReserve;
+      }
 
 
 ```
+[Frankencoin.sol#L141-L145](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L141-L145)
+
+### Recommended Mitigation 
+
+```solidity
+
+time >= exp ? return 0 : return uint32(mintingFeePPM - mintingFeePPM * (time - start) / (exp - start));
+
+```
+
+##
+
+## [G-17] The Less gas consuming condition checks should be on top 
+
+> Instances(1) 
+
+When writing conditional statements in smart contracts, it is generally best practice to order the conditions so that the less gas-consuming checks are performed first. This can help to optimize the gas usage of the contract and improve its overall efficiency
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Frankencoin.sol
+
+84: if (_applicationPeriod < MIN_APPLICATION_PERIOD && totalSupply() > 0) revert PeriodTooShort();
+85: if (_applicationFee < MIN_FEE  && totalSupply() > 0) revert FeeTooLow();
+86: if (minters[_minter] != 0) revert AlreadyRegistered();
+
+```
+[Frankencoin.sol#L84-L86](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Frankencoin.sol#L84-L86)
+
+##
+
+## [G-18] internal functions not called by the contract should be removed to save deployment gas
+
+> Instances(4) 
+
+If the functions are required by an interface, the contract should inherit from that interface and use the override keyword
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/MathUtil.sol
+
+18: function _cubicRoot(uint256 _v) internal pure returns (uint256) {
+39: function _power3(uint256 _x) internal pure returns(uint256) {
+
+```
+[MathUtil.sol#L18](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MathUtil.sol#L18)
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/ERC20.sol
+
+179: function _mint(address recipient, uint256 amount) internal virtual {
+200: function _burn(address account, uint256 amount) internal virtual {
+
+```
+[ERC20.sol#L179](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/ERC20.sol#L179)
+
+##
+
+## [G-19] Using bools for memory incurs overhead
+
+> Instances(1) 
+
+Use uint256(1) and uint256(2) for true/false
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/MathUtil.sol
+
+21:   bool cond;
+
+```
+[MathUtil.sol#L21](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/MathUtil.sol#L21)
+
+##
+
+## [G-20] Avoid emitting constants
+
+> Instances(2) 
+
+One way to optimize your smart contract and reduce the gas cost is to avoid emitting constants. When you declare a constant in your contract, it is stored on the blockchain and takes up space. This can increase the cost of deploying your contract and make it more expensive to execute.
+
+To avoid emitting constants, you can use inline assembly to perform arithmetic operations or bitwise operations. You can also use local variables instead of constants, and calculate the values you need at runtime
+
+```solidity
+FILE: 2023-04-frankencoin/contracts/Position.sol
+
+original,collateral are immutable constants 
+
+69: emit PositionOpened(_owner, original, _zchf, address(collateral), _liqPrice);
+85: emit PositionOpened(owner, original, address(zchf), address(collateral), _price);
+
+
+```
+[Position.sol#L69](https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Position.sol#L69)
 
 
 
 
 
 
-
-GAS‑1	abi.encode() is less efficient than abi.encodepacked()	2	200
-GAS‑2	<array>.length Should Not Be Looked Up In Every Loop Of A For-loop	3	291
-GAS‑3	Setting the constructor to payable	6	78
-GAS‑4	Do not calculate constants	7	-
-GAS‑5	Duplicated require()/revert() Checks Should Be Refactored To A Modifier Or Function	4	112
-GAS‑6	++i Costs Less Gas Than i++, Especially When It’s Used In For-loops (--i/i-- Too)	2	12
-GAS‑7	Use assembly to write address storage values	1	-
-GAS‑8	Functions guaranteed to revert when called by normal users can be marked payable	6	126
-GAS‑9	Use hardcoded address instead address(this)	9	-
-GAS‑10	It Costs More Gas To Initialize Variables To Zero Than To Let The Default Of Zero Be Applied	1	-
-GAS‑11	internal functions only called once can be inlined to save gas	14	308
-GAS‑12	Multiplication/division By Two Should Use Bit Shifting	1	-
-GAS‑13	Optimize names to save gas	10	220
-GAS‑14	<x> += <y> Costs More Gas Than <x> = <x> + <y> For State Variables	20	-
-GAS‑15	Structs can be packed into fewer storage slots by editing time variables	2	4000
-GAS‑16	Using private rather than public for constants, saves gas	5	-
-GAS‑17	Public Functions To External	37	-
-GAS‑18	Save gas with the use of specific import statements	28	-
-GAS‑19	Splitting require() Statements That Use && Saves Gas	1	9
-GAS‑20	State variables can be packed into fewer storage slots	1	2000
-GAS‑21	Usage of uints/ints smaller than 32 bytes (256 bits) incurs overhead	10	-
-GAS‑22	++i/i++ Should Be unchecked{++i}/unchecked{i++} When It Is Not Possible For Them To Overflow, As Is The Case When Used In For- And While-loops	3	105
-GAS‑23	Using unchecked blocks to save gas	2	40
-GAS‑24	Unnecessary look up in if condition	1	2100
-GAS‑25	Use of Custom Errors Instead of String	12	-
-GAS‑26	Use solidity version 0.8.19 to gain some gas boost	10	880
-GAS‑27	Using 10**X for constants isn't gas efficient	3	-
