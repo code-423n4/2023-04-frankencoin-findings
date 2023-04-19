@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "carrotsmuggler",
+  "risk": "2",
+  "title": "`_challengeSeconds ` accepts 0 value when creating a position",
+  "issueId": 794,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/794"
+}
