@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "decade",
+  "risk": "2",
+  "title": "Lack of zero address check throughout the codebase could lead to unwanted redeployments, address(0) ownership and `onTokenTransfer` unsuccessful.  ",
+  "issueId": 933,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/933"
+}
