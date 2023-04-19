@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Tricko",
+  "risk": "2",
+  "title": "`block.number` as a timing mechanism can be unreliable in other networks.",
+  "issueId": 511,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/511"
+}
