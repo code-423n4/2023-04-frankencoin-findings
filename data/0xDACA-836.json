@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xDACA",
+  "risk": "3",
+  "title": "An attacker can mint himself many tokens for free by cloning a position and adjusting its price",
+  "issueId": 836,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/836"
+}
