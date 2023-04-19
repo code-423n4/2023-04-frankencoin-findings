@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "zzebra83",
+  "risk": "2",
+  "title": "restructureCapTable function does not burn balance of addresses to wipe",
+  "issueId": 720,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/720"
+}
