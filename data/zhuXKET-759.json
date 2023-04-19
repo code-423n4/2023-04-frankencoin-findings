@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "zhuXKET",
+  "risk": "2",
+  "title": "Delegates can use more voting power due to an error in `Equity.canVoteFor`",
+  "issueId": 759,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/759"
+}
