@@ -61,3 +61,39 @@ https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/ERC20Permi
             );
     }
 ```
+
+
+## When the equity is 0, calculateSharesInternal() will have an error of dividing by 0
+
+https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L268
+
+When `balanceOf(address(reserve)) < minterReserve()`, the equity function will return 0.
+
+```solidity
+function equity() public view returns (uint256) {
+  uint256 balance = balanceOf(address(reserve));
+  uint256 minReserve = minterReserve();
+  if (balance <= minReserve){
+    return 0;
+  } else {
+    return balance - minReserve;
+  }
+```
+
+Then in the `calculateSharesInternal` calculation, if the value of `zchf.equity()` is 0, then there will be an error of dividing by 0.
+
+```solidity
+* @notice Calculate shares received when depositing ZCHF
+ * @param investment ZCHF invested
+ * @return amount of shares received for the ZCHF invested
+ */
+function calculateShares(uint256 investment) public view returns (uint256) {
+    return calculateSharesInternal(zchf.equity(), investment);
+}
+
+function calculateSharesInternal(uint256 capitalBefore, uint256 investment) internal view returns (uint256) {
+    uint256 totalShares = totalSupply();
+    uint256 newTotalShares = totalShares < 1000 * ONE_DEC18 ? 1000 * ONE_DEC18 : _mulD18(totalShares, _cubicRoot(_divD18(capitalBefore + investment, capitalBefore)));//@audit
+    return newTotalShares - totalShares;
+}
+```
