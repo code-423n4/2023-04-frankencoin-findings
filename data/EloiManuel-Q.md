@@ -8,7 +8,7 @@ Note that this is my first submission at Code4rena and I am still figuring out h
 | L  | Low Risk | Potential risk |
 | NC |  Non-critical | Non risky findings |
 
-| Total Found Issues | 4 |
+| Total Found Issues | 5 |
 |:--:|:--:|
 
 ### Low Risk Issues
@@ -25,8 +25,9 @@ Note that this is my first submission at Code4rena and I am still figuring out h
 | [NC-01] | Missing or vague error messages |
 | [NC-02] | Constants should be defined rather than using magic numbers |
 | [NC-03] | Inconsistent Documentation |
+| [NC-04] | Unnecessary Import |
 
-| Total Non-critical Risk Issues | 3 |
+| Total Non-critical Risk Issues | 4 |
 |:--:|:--:|
 
 ### [L-01] `restructureCapTable()` incorrect burning mechanism
@@ -57,13 +58,13 @@ Some `require` statements do not have an error message or are the error messages
 contracts/Position.sol
 
 53: require(initPeriod >= 3 days); // must be at least three days, recommended to use higher values
-``` 
+```
 
 ```solidity
 contracts/Equity.sol
 
 276: require(canRedeem(msg.sender));
-```
+``` 
 
 ```solidity
 contracts/StablecoinBridge.sol
@@ -112,4 +113,11 @@ Furthermore, on Equity.sol, it says that equity could be negative when it is usi
 
 ```solidity
 300:     * If there is less than 1000 ZCHF in equity left (maybe even negative),
+```
+
+### [NC-04] | Unnecessary Import
+The following import in `PositionFactory.sol` was not found to be necessary:
+
+```solidity
+5:  import "./IFrankencoin.sol";
 ```
