@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Kek",
+  "risk": "2",
+  "title": "Equity.restructureCapTable() only burns tokens from the first element in the addressesToWipe array",
+  "issueId": 708,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/708"
+}
