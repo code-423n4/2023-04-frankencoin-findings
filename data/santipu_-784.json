@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "santipu_",
+  "risk": "2",
+  "title": "Shares are miscalculated in calculateShares when equity is less than investment",
+  "issueId": 784,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/784"
+}
