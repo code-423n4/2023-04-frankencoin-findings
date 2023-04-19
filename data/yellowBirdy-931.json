@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "yellowBirdy",
+  "risk": "3",
+  "title": "Minter and position privileges allow unrestricted minting and burning of arbitrary tokens",
+  "issueId": 931,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/931"
+}
