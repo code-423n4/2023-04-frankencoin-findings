@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "cccz",
+  "risk": "2",
+  "title": "When the challenge is successful, if the collateral is ERC777 tokens, the bidder can prevent the challenger from withdrawing the collateral and receive the challenge reward",
+  "issueId": 711,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/711"
+}
