@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "Madalad",
+  "risk": "2",
+  "title": "Spender can spend more `ERC20` tokens than owner intends",
+  "issueId": 592,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/592"
+}
