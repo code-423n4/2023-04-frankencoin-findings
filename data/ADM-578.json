@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ADM",
+  "risk": "2",
+  "title": "Collateral can be claimed by anyone if there are no bids on a challenge.",
+  "issueId": 578,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/578"
+}
