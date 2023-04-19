@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "ak1",
+  "risk": "2",
+  "title": "Frankencoin  : do not take use the `reservePPM` as function argument. Malicious user can use this value to arbitrarily change the minterReserveE6 ",
+  "issueId": 981,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/981"
+}
