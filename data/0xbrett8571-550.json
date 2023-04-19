@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "0xbrett8571",
+  "risk": "3",
+  "title": "Frozen funds because of integer overflow error In `mintInternal` function, `collateral_` parameter, is not checked for a zero value.",
+  "issueId": 550,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/550"
+}
