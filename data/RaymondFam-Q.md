@@ -110,14 +110,11 @@ For instance, the custom error instance below may be refactored as follows:
 ## Position owner could shill bid after increasing the price
 A position owner attempting to mint more `ZCHF` by [increasing the price](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Position.sol#L159-L167) without increasing the collateral  could technically shill bid any challenge launched against it. This will ensure the owner take back his collateral above market price at the worst and per chance the owner could profit from a higher bid than what she has shilled or even have the challenged averted by the next bidders. 
 
-## Comment and code mismatch
-In the constructor of Position.sol, the minimum [`initPeriod`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Position.sol#L53) is 3 days whereas `start` is commented as one week:
+## Hardcode 7 days
+In MintingHub.sol, [`_initPeriodSeconds`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MintingHub.sol#L99), i.e. `initPeriod` has been harcoded to [7 days](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/MintingHub.sol#L64). It might seem appropriate or optimized for now but could be too short or too long when market changed and/or more minters surfaced, making this specific input parameter no longer competitive or popular.
 
-[File: Position.sol#L64](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Position.sol#L64)
+Consider soft coding it where possible. 
 
-```solidity
-        start = block.timestamp + initPeriod; // one week time to deny the position
-```
 ## Incorrect parameter on isPosition()
 `isPosition(spender)` generally returns zero address since it is unlikely that the minter (spender) registers itself as a position. It is non-critical here since the first condition should always suffice. Nevertheless, consider having the affected code refactored as follows unless the protocol has an intended plan other than the one aforementioned:
 
@@ -149,3 +146,18 @@ Consider:
 2. clearly documenting the functions and implementations the owner can change,
 3. documenting the risks associated with privileged users and single points of failure, and
 4. ensuring that users are aware of all the risks associated with the system.
+
+## Comment and code mismatch
+In Position.sol, the [NatSpec comment](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Position.sol#L116-L119) of `getUsableMint()` says that the non-usable mint is used to buy reserve pool shares, whereas `zchf.mint(target, amount, reserveContribution, calculateCurrentFee())` does not have evidence alleging that FPS shares are being bought:
+
+[File: Frankencoin.sol#L165-L170](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L165-L170)
+
+```solidity
+   function mint(address _target, uint256 _amount, uint32 _reservePPM, uint32 _feesPPM) override external minterOnly {
+      uint256 usableMint = (_amount * (1000_000 - _feesPPM - _reservePPM)) / 1000_000; // rounding down is fine
+      _mint(_target, usableMint);
+      _mint(address(reserve), _amount - usableMint); // rest goes to equity as reserves or as fees
+      minterReserveE6 += _amount * _reservePPM; // minter reserve must be kept accurately in order to ensure we can get back to exactly 0
+   }
+```
+As can be seen from the code block above, rest goes to equity as reserves or as fees only. It is not being routed through [`transferAndCall()`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/ERC20.sol#L162-L168) to invoke [`IERC677Receiver(recipient).onTokenTransfer(msg.sender, amount, data)`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L241-L255) for [minting](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L248) of `FPS`. Neither is `redeem()` called to [burn](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Equity.sol#L278) any FPS when [`calculateAssignedReserve()`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L204-L213) or [`freedAmount - _amountExcludingReserve`](https://github.com/code-423n4/2023-04-frankencoin/blob/main/contracts/Frankencoin.sol#L254) is transferred back to the position owner.   
