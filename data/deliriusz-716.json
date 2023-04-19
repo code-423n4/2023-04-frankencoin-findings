@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "deliriusz",
+  "risk": "2",
+  "title": "Unexpected reentrant ERC677 support in `ERC20` poses security and economic risk to the protocol",
+  "issueId": 716,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/716"
+}
