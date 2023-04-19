@@ -116,3 +116,22 @@ IPositionFactory private immutable POSITION_FACTORY; // position contract to clo
 ```
 
 https://github.com/code-423n4/2023-04-frankencoin/blob/f86279e76fd9f810d2a25243012e1be4191a547e/contracts/MintingHub.sol#L28
+
+## Incorrect loop
+Doesn't burn tokens from all the addresses in the addressesToWipe array as the function intends, only from the first one.
+
+
+```
+        for (uint256 i = 0; i<addressesToWipe.length; i++){
+            address current = addressesToWipe[0];
+            _burn(current, balanceOf(current));
+        }
+```
+should read 
+```
+        for (uint256 i = 0; i<addressesToWipe.length; i++){
+            address current = addressesToWipe[i];
+            _burn(current, balanceOf(current));
+        }
+```
+https://github.com/code-423n4/2023-04-frankencoin/blob/1022cb106919fba963a89205d3b90bf62543f68f/contracts/Equity.sol#L312-L314
