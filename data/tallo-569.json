@@ -1,0 +1,8 @@
+{
+  "contest": 231,
+  "handle": "tallo",
+  "risk": "3",
+  "title": "Position contract can create an arbitrary amount of frankencoins by inflating price and challenge rewards",
+  "issueId": 569,
+  "issueUrl": "https://github.com/code-423n4/2023-04-frankencoin-findings/issues/569"
+}
